@@ -1,22 +1,26 @@
+from plyer import notification
 import speech_recognition as sr
 import pyttsx3
-import sqlite3
 import os
 from calc import *
 import subprocess
 from open_apps import openApp
 import webbrowser as wb
 import wikipedia
-import time
 import json
 import requests
 import geocoder
 from geopy.geocoders import Nominatim
 from welcome import *
 import screen_brightness_control as sbc
-from time import gmtime, strftime
+from time import *
 from youtube_downloader import *
-
+from math import *
+from azan import *
+from voice_activation import *
+from words import *
+from app_closer import closeApp
+from pyttsx3.drivers import sapi5
 r = sr.Recognizer()
 
 engine = pyttsx3.init()
@@ -55,7 +59,9 @@ def main():
     Speak(f"Good {welcome_mesage()} {username}")
     Speak(
         f"it is {int(strftime('%I'))} {int(strftime('%M'))} {strftime('%p')}")
+
     while True:
+
         try:
             calc = False
             with sr.Microphone() as source2:
@@ -81,14 +87,15 @@ def main():
                 if "hello" in MyText:
                     Speak("Hello to you too!")
 
-                if "+" in MyText or "-" in MyText or "*" in MyText or "/" in MyText:
+                if "+" in MyText or "-" in MyText or "*" in MyText or "/" in MyText or "sqrt" in MyText:
                     try:
                         result = eval(MyText)
                         Speak(f"The answer is {result}")
                         print(f"The answer is {result}")
+
                     except:
                         Speak("What was That ?")
-                # Weather
+
                 elif "weather" in MyText:
                     Speak(
                         f"The weather in {city} is {weather_message()[0]}  degrees ,  and {weather_message()[1]}")
@@ -96,6 +103,9 @@ def main():
                 elif "date" in MyText:
                     Speak("Today is " + str(strftime('%A')) + str(int(strftime('%d'))) +
                           str(strftime('%B')) + str(strftime('%Y')))
+
+                elif "azan" in MyText or "pray" in MyText:
+                    Speak(get_prayer())
 
                 elif "time" in MyText:
                     Speak(
@@ -131,10 +141,10 @@ def main():
                             notes = input("Please Type Your Notes :\n")
                             f.write(notes + "\n")
                     elif "delete" in MyText or "remove" in MyText:
-                        with open("notes.txt", "w") as f:
-                            Speak("Your Notes Will Be Deleted. Are You Sure")
-                            notes = input("Are you sure (Y/N):\n")
-                            if notes.lower() == "y":
+                        Speak("Your Notes Will Be Deleted. Are You Sure")
+                        notes = input("Are you sure (Y/N):\n")
+                        if notes.lower() == "y":
+                            with open("notes.txt", "w") as f:
                                 f.write("")
                     else:
                         with open("notes.txt", "r") as f:
@@ -144,7 +154,9 @@ def main():
                 elif "open" in MyText:
                     MyText = MyText.replace("open ", "")
                     Speak(f"opening {str(MyText)}")
-                    openApp(MyText)
+                    x = openApp(MyText)
+                    if not x:
+                        Speak("Here's some results from the internet")
 
                 # Google Search
                 elif "google" in MyText:
@@ -162,7 +174,6 @@ def main():
                     Speak("Please type the video you want to download")
                     url = input("Please type the video you want to download :")
                     youtube_download(url)
-                    quit()
                 # Brightness Control
                 elif "brightness" in MyText:
                     old = sbc.get_brightness()
@@ -181,7 +192,17 @@ def main():
                     else:
                         Speak(f"Current brightness is {old}")
 
-                elif "shutdown" in MyText:
+                elif "close" in MyText:
+                    MyText = MyText.replace("close ", "")
+                    Speak(f"Closing {MyText}")
+                    x = closeApp(MyText)
+                    if not x:
+                        Speak(f"Nothing found")
+                    else:
+                        Speak(f"{x} Closed")
+
+                # Shutdown
+                elif "shutdown" in MyText or "shut down" in MyText:
                     if "after" in MyText:
                         time = ((get_hours(MyText) * 3600 +
                                  get_minutes(MyText) * 60))
@@ -189,9 +210,10 @@ def main():
                     else:
                         for i in range(11, 0, -1):
                             print(f"Shutting down in {i}")
-                            time.sleep(1)
-                        os.system("shutdown /s")
+                            sleep(1)
+                        os.system("shutdown -s")
 
+                # restart
                 elif "restart" in MyText:
                     if "after" in MyText:
                         time = ((get_hours(MyText) * 3600 +
@@ -200,8 +222,8 @@ def main():
                     else:
                         for i in range(11, 0, -1):
                             print(f"Restarting in {i}")
-                            time.sleep(1)
-                        os.system("shutdown /r")
+                            sleep(1)
+                        os.system("shutdown -r")
                 elif "bye" in MyText or "quit" in MyText or "leave" in MyText:
                     Speak("it was an honor serving here ")
                     quit()
@@ -211,6 +233,14 @@ def main():
 
         except sr.UnknownValueError:
             print("unknown error occured")
+
+        word = get_word("stand_by")
+        notification.notify(
+            title='Standing By', message=word, app_name='Virtual Assistant')
+        sleep(1)
+        Speak(word)
+        stand_by()
+        Speak(get_word("after_stand_by"))
 
 
 def Speak(command):

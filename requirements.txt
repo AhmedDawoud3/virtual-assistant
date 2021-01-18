@@ -1,0 +1,12 @@
+plyer
+pyaudio
+pyttsx3
+wikipedia
+requests
+geocoder
+geopy
+screen_brightness_control
+youtube_search
+pafy
+youtube_dl
+keyboard

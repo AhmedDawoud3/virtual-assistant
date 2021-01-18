@@ -26,7 +26,7 @@ def openApp(MyText):
                 subprocess.Popen(
                     ['start', '', app], shell=True)
                 f.close()
-                quit()
+                return True
                 break
         f.close()
 
@@ -39,6 +39,8 @@ def openApp(MyText):
                 site = data[site]
                 wb.open_new_tab(site)
                 f.close()
-                quit()
+                return True
                 break
         f.close()
+        wb.open_new_tab(f'https://www.google.com/search?q={MyText}')
+        return False

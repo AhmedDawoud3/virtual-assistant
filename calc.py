@@ -1,3 +1,4 @@
+import math
 hour_found = False
 minute_found = False
 
@@ -20,6 +21,8 @@ def replace_expresions(MyText):
     MyText = MyText.replace("divide", "/")
     MyText = MyText.replace("divided by", "/")
     MyText = MyText.replace("over", "/")
+    MyText = MyText.replace("square root ", "sqrt(") + ")"
+
     return MyText
 
 
