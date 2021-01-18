@@ -1,3 +1,7 @@
+hour_found = False
+minute_found = False
+
+
 def replace_theTexting_by_num(theText):
     theText = theText.replace("one", "1")
     theText = theText.replace("two", "2")
@@ -17,3 +21,45 @@ def replace_expresions(MyText):
     MyText = MyText.replace("divided by", "/")
     MyText = MyText.replace("over", "/")
     return MyText
+
+
+def get_hours(text):
+    global hour_found
+    h = 0
+    for i in range(len(text)):
+        if str(text[i: i+4]) == "hour":
+            hour_found = True
+            h = i
+            break
+
+    i = 0
+    if hour_found == True:
+        for i in range(h, 0, -1):
+            if text[i].isdigit():
+                if text[i-1].isdigit():
+                    return int(text[i-1: i+1])
+                return int(text[i])
+
+    return 0
+
+
+def get_minutes(text):
+    global minute_found
+    h = 0
+    for i in range(len(text)):
+        if str(text[i: i+6]) == "minute":
+            minute_found = True
+            h = i
+            break
+
+    i = 0
+    if minute_found == True:
+        for i in range(h, 0, -1):
+            if text[i].isdigit():
+                if text[i-1].isdigit():
+                    if text[i-2].isdigit():
+                        return int(text[i-2: i+1])
+                    return int(text[i-1: i+1])
+                return int(text[i])
+
+    return 0

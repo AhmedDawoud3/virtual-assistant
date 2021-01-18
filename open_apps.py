@@ -2,6 +2,10 @@ import json
 import re
 import os
 import webbrowser as wb
+import subprocess
+from getpass import getuser
+
+username = getuser()
 
 
 def openApp(MyText):
@@ -16,7 +20,24 @@ def openApp(MyText):
         for app in data:
             # print(f"{app} : {data[app]}")
             if re.match(f".*{MyText}.*", app):
-                os.system(f"start {data[app]}")
+                app = data[app]
+                app = app.replace("username", username)
+                # os.system(f"start /c {data[app]}")
+                subprocess.Popen(
+                    ['start', '', app], shell=True)
+                f.close()
+                quit()
+                break
+        f.close()
+
+        f = open('websites.json',)
+
+        data = json.load(f)
+
+        for site in data:
+            if re.match(f".*{MyText}.*", site):
+                site = data[site]
+                wb.open_new_tab(site)
                 f.close()
                 quit()
                 break
