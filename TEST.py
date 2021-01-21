@@ -224,20 +224,77 @@
 #             break
 
 
+# import time
+
+# begin = time.time()
+
+# # program body starts
+
+# # for i in range(5):
+# #     print("GeeksForGeeks")
+# # program body ends
+# # store end time
+# while True:
+#     end = time.time()
+#     if(end - begin) >= 2:
+#         print("hello")
+#         begin = time.time()
+# total time taken
+# print(f"Total runtime of the program is {end - begin}")
+
+# import pyttsx3
+# engine = pyttsx3.init()
+# voices = engine.getProperty('voices')
+# engine.setProperty(
+#     'voice', "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0")
+# engine.say("Hello World!")
+# engine.runAndWait()
+# engine.stop()
+
+# from pydub import AudioSegment
+
+# song = AudioSegment.from_file("music\Snowman.webm", "webm")
+# print("Loaded")
+# song.export("neco.mp3", format="mp3", bitrate="320k")
+# print("Converted and saved")
+
+# from audioplayer import AudioPlayer
+# import time
+
+# # Playback stops when the object is destroyed (GC'ed), so save a reference to the object for non-blocking playback.
+# AudioPlayer("music\Snowman.m4a").play(block=True)
+# # time.sleep(5)
+# AudioPlayer("E:\Projects\Python\youtube-dl\Abandoned & Shiah Maisel - Finally Healing [NCS Release].m4a").stop()
+
+
+# import vlc
+# import time
+
+# # creating vlc media player object
+# media = vlc.MediaPlayer("music\Snowman.m4a")
+
+# # start playing video
+# media.play()
+# time.sleep(5)
+
+import vlc
 import time
 
-begin = time.time()
+# importing pafy module
+import pafy
 
-# program body starts
+# url of the video
+url = "https://www.youtube.com/watch?v=loB4bRVTVbA"
 
-# for i in range(5):
-#     print("GeeksForGeeks")
-# program body ends
-# store end time
-while True:
-    end = time.time()
-    if(end - begin) >= 2:
-        print("hello")
-        begin = time.time()
-    # total time taken
-    # print(f"Total runtime of the program is {end - begin}")
+# creating pafy object of the video
+video = pafy.new(url)
+
+# getting stream at index 0
+best = video.streams[0]
+
+# creating vlc media player object
+media = vlc.MediaPlayer(video.allstreams[1].url)
+
+# start playing video
+media.play()
+time.sleep(5)

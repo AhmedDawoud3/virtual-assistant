@@ -19,7 +19,7 @@ def openApp(MyText):
 
         for app in data:
             # print(f"{app} : {data[app]}")
-            if re.match(f".*{MyText}.*", app):
+            if MyText in app:
                 app = data[app]
                 app = app.replace("username", username)
                 # os.system(f"start /c {data[app]}")
@@ -27,7 +27,7 @@ def openApp(MyText):
                     ['start', '', app], shell=True)
                 f.close()
                 return True
-                break
+
         f.close()
 
         f = open('websites.json',)
@@ -35,12 +35,11 @@ def openApp(MyText):
         data = json.load(f)
 
         for site in data:
-            if re.match(f".*{MyText}.*", site):
+            if MyText in site:
                 site = data[site]
                 wb.open_new_tab(site)
                 f.close()
                 return True
-                break
         f.close()
         wb.open_new_tab(f'https://www.google.com/search?q={MyText}')
         return False

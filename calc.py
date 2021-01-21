@@ -4,24 +4,26 @@ minute_found = False
 
 
 def replace_theTexting_by_num(theText):
-    theText = theText.replace("one", "1")
-    theText = theText.replace("two", "2")
-    theText = theText.replace("three", "3")
-    theText = theText.replace("four", "4")
-    theText = theText.replace("five", "5")
-    theText = theText.replace("six", "6")
-    theText = theText.replace("seven", "7")
-    theText = theText.replace("eight", "8")
-    theText = theText.replace("nine", "9")
+    theText.replace("one", "1")
+    theText.replace("two", "2")
+    theText.replace("three", "3")
+    theText.replace("four", "4")
+    theText.replace("five", "5")
+    theText.replace("six", "6")
+    theText.replace("seven", "7")
+    theText.replace("eight", "8")
+    theText.replace("nine", "9")
     return theText
 
 
 def replace_expresions(MyText):
-    MyText = MyText.replace("by", "*")
-    MyText = MyText.replace("divide", "/")
-    MyText = MyText.replace("divided by", "/")
-    MyText = MyText.replace("over", "/")
-    MyText = MyText.replace("square root ", "sqrt(") + ")"
+    MyText.replace("by", "*")
+    MyText.replace("divide", "/")
+    MyText.replace("divided by", "/")
+    MyText.replace("over", "/")
+    if "square root" in MyText:
+
+        MyText.replace("square root ", "sqrt(") + ")"
 
     return MyText
 

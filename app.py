@@ -25,16 +25,20 @@ r = sr.Recognizer()
 
 engine = pyttsx3.init()
 
-numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
+numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+v = ["HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0",
+     "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"]
 data = json.load(open('user.json',))
 username = data["username"]
 city = data["city"]
+voice = data["voice"]
 
 
 def main():
     global username
     global city
+    global voice
     if username == "":
         Speak("Hello. I'm your virtual assistant. What's your name?")
         username = input(
@@ -55,6 +59,29 @@ def main():
         data["city"] = city
         with open("user.json", "w") as f:
             f.write(json.dumps(data))
+
+    if voice == "":
+        for a in range(len(v)):
+            engine.setProperty('voice', (v[a]))
+            Speak(
+                f"For this voice press {a}")
+        c = input("Please Choose (0, 1) :")
+
+        while (c != "0" and c != "1"):
+            c = input("Please Choose (0, 1) :")
+
+        c = int(c)
+
+        data = json.load(open('user.json', ))
+        data["voice"] = c
+        with open("user.json", "w") as f:
+            f.write(json.dumps(data))
+        voice = data["voice"]
+
+    voices = engine.getProperty('voices')
+
+    engine.setProperty(
+        'voice', v[int(voice)])
 
     Speak(f"Good {welcome_mesage()} {username}")
     Speak(
@@ -133,6 +160,27 @@ def main():
                     with open("user.json", "w") as f:
                         f.write(json.dumps(data))
 
+                # Voice Changing
+                elif "change" in MyText and "voice" in MyText:
+                    for a in range(len(v)):
+                        engine.setProperty('voice', (v[a]))
+                        Speak(
+                            f"For this voice press {a}")
+                    while True:
+                        c = input("Please Choose (0, 1) :")
+                        if c in ("0", "1"):
+                            c = int(c)
+                            break
+                    data = json.load(open('user.json', ))
+                    data["voice"] = c
+                    with open("user.json", "w") as f:
+                        f.write(json.dumps(data))
+
+                    voices = engine.getProperty('voices')
+
+                    engine.setProperty(
+                        'voice', v[int(c)])
+
                 # Notes
                 elif "note" in MyText:
                     if "take" in MyText:
@@ -153,10 +201,11 @@ def main():
                 # Open Programmes
                 elif "open" in MyText:
                     MyText = MyText.replace("open ", "")
-                    Speak(f"opening {str(MyText)}")
                     x = openApp(MyText)
                     if not x:
                         Speak("Here's some results from the internet")
+                    else:
+                        Speak(f"opening {str(MyText)}")
 
                 # Google Search
                 elif "google" in MyText:
@@ -164,11 +213,18 @@ def main():
                         "google ", "")
                     wb.open_new_tab(
                         f'https://www.google.com/search?q={search}')
+
                 elif "what is" in MyText:
                     search = MyText.replace("what is ", "")
-                    print(wikipedia.summary(search))
-                    Speak("According to wikipedia " +
-                          wikipedia.summary(search, sentences=4))
+                    try:
+                        print(wikipedia.summary(search))
+                        Speak("According to wikipedia " +
+                              wikipedia.summary(search))
+                    except:
+                        search = MyText.replace(
+                            "what is ", "")
+                        wb.open_new_tab(
+                            f'https://www.google.com/search?q={search}')
 
                 elif "download" in MyText and "youtube" in MyText:
                     Speak("Please type the video you want to download")
