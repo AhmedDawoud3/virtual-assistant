@@ -19,6 +19,7 @@
 # Data = subprocess.check_output(['wmic', 'product', 'get', 'name'])
 # a = str(Data)
 
+
 # # try block
 # try:
 
@@ -277,24 +278,24 @@
 # media.play()
 # time.sleep(5)
 
-import vlc
-import time
+# import vlc
+# import time
 
-# importing pafy module
-import pafy
+# # importing pafy module
+# import pafy
 
-# url of the video
-url = "https://www.youtube.com/watch?v=loB4bRVTVbA"
+# # url of the video
+# url = "https://www.youtube.com/watch?v=loB4bRVTVbA"
 
-# creating pafy object of the video
-video = pafy.new(url)
+# # creating pafy object of the video
+# video = pafy.new(url)
 
-# getting stream at index 0
-best = video.streams[0]
+# # getting stream at index 0
+# best = video.streams[0]
 
-# creating vlc media player object
-media = vlc.MediaPlayer(video.allstreams[1].url)
+# # creating vlc media player object
+# media = vlc.MediaPlayer(video.allstreams[1].url)
 
-# start playing video
-media.play()
-time.sleep(5)
+# # start playing video
+# media.play()
+# time.sleep(5)

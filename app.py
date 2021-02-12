@@ -1,4 +1,4 @@
-from plyer import notification
+# from plyer import notification
 import speech_recognition as sr
 import pyttsx3
 import os
@@ -18,9 +18,12 @@ from youtube_downloader import *
 from math import *
 from azan import *
 from voice_activation import *
-from words import *
+from words import get_word
 from app_closer import closeApp
 from pyttsx3.drivers import sapi5
+import random
+from music_player import *
+
 r = sr.Recognizer()
 
 engine = pyttsx3.init()
@@ -39,6 +42,8 @@ def main():
     global username
     global city
     global voice
+    music = None
+    music_list = []
     if username == "":
         Speak("Hello. I'm your virtual assistant. What's your name?")
         username = input(
@@ -124,6 +129,7 @@ def main():
                         Speak("What was That ?")
 
                 elif "weather" in MyText:
+                    Speak("Checking Weather")
                     Speak(
                         f"The weather in {city} is {weather_message()[0]}  degrees ,  and {weather_message()[1]}")
 
@@ -214,22 +220,74 @@ def main():
                     wb.open_new_tab(
                         f'https://www.google.com/search?q={search}')
 
-                elif "what is" in MyText:
+                elif "what is" in MyText or "what's" in MyText:
                     search = MyText.replace("what is ", "")
                     try:
                         print(wikipedia.summary(search))
                         Speak("According to wikipedia " +
-                              wikipedia.summary(search))
+                              str(wikipedia.summary(search, sentences=4)))
                     except:
                         search = MyText.replace(
                             "what is ", "")
                         wb.open_new_tab(
                             f'https://www.google.com/search?q={search}')
 
-                elif "download" in MyText and "youtube" in MyText:
-                    Speak("Please type the video you want to download")
-                    url = input("Please type the video you want to download :")
-                    youtube_download(url)
+                elif "who is" in MyText:
+                    search = MyText.replace("who is ", "")
+                    try:
+                        print(wikipedia.summary(search))
+                        Speak("According to wikipedia " +
+                              str(wikipedia.summary(search, sentences=4)))
+                    except:
+                        search = MyText.replace(
+                            "who is ", "")
+                        wb.open_new_tab(
+                            f'https://www.google.com/search?q={search}')
+
+                # Download From Youtube
+                elif "download" in MyText:
+                    if 'music' in MyText:
+                        song = Speak(
+                            "Please write down the name of the song you want to download :")
+                        url = input(
+                            "Please write down the name of the song you want to download :")
+                        youtube_download(url, "music")
+                    elif "youtube" in MyText:
+                        Speak(
+                            "Please type the name of the video you want to download :")
+                        url = input(
+                            "Please type the name of the video you want to download :")
+                        youtube_download(url, "youtube")
+
+                # Music Player
+                elif "music" in MyText:
+                    if "play" in MyText:
+                        artist = MyText.replace("play music ", "")
+                        if artist == "play music":
+                            artist = get_word("artist")
+
+                        Speak(f"Playing {artist} Music")
+                        music, music_list = music_player(artist, music)
+
+                    elif "pause" in MyText or "stop" in MyText or "continue" in MyText:
+                        pause_music(music)
+
+                    elif "next" in MyText:
+                        if music == None:
+                            artist = get_word("artist") + " music"
+                            music, music_list = music_player(artist, music)
+                        else:
+                            Speak("Playing next music")
+                            music = next_music(music, music_list)
+
+                # elif "next" in MyText:
+                #     if music == None:
+                #         artist = get_word("artist") + " music"
+                #         music, music_list = music_player(artist, music)
+                #     else:
+                #         Speak("Playing next music")
+                #         music = next_music(music, music_list)
+
                 # Brightness Control
                 elif "brightness" in MyText:
                     old = sbc.get_brightness()
@@ -285,14 +343,14 @@ def main():
                     quit()
 
         except sr.RequestError as e:
+            Speak("Could not request results; {0}".format(e))
             print("Could not request results; {0}".format(e))
 
         except sr.UnknownValueError:
+            Speak("unknown error occured")
             print("unknown error occured")
 
         word = get_word("stand_by")
-        notification.notify(
-            title='Standing By', message=word, app_name='Virtual Assistant')
         sleep(1)
         Speak(word)
         stand_by()
