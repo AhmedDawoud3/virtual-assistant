@@ -65,29 +65,6 @@ def main():
         with open("user.json", "w") as f:
             f.write(json.dumps(data))
 
-    if voice == "":
-        for a in range(len(v)):
-            engine.setProperty('voice', (v[a]))
-            Speak(
-                f"For this voice press {a}")
-        c = input("Please Choose (0, 1) :")
-
-        while (c != "0" and c != "1"):
-            c = input("Please Choose (0, 1) :")
-
-        c = int(c)
-
-        data = json.load(open('user.json', ))
-        data["voice"] = c
-        with open("user.json", "w") as f:
-            f.write(json.dumps(data))
-        voice = data["voice"]
-
-    voices = engine.getProperty('voices')
-
-    engine.setProperty(
-        'voice', v[int(voice)])
-
     Speak(f"Good {welcome_mesage()} {username}")
     Speak(
         f"it is {int(strftime('%I'))} {int(strftime('%M'))} {strftime('%p')}")
@@ -361,6 +338,30 @@ def Speak(command):
     engine = pyttsx3.init()
     engine.say(command)
     engine.runAndWait()
+
+
+if voice == "":
+    for a in range(len(v)):
+        engine.setProperty('voice', (v[a]))
+        Speak(
+            f"For this voice press {a}")
+    c = input("Please Choose (0, 1) :")
+
+    while (c != "0" and c != "1"):
+        c = input("Please Choose (0, 1) :")
+
+    c = int(c)
+
+    data = json.load(open('user.json', ))
+    data["voice"] = c
+    with open("user.json", "w") as f:
+        f.write(json.dumps(data))
+    voice = data["voice"]
+
+voices = engine.getProperty('voices')
+
+engine.setProperty(
+    'voice', v[int(voice)])
 
 
 if __name__ == '__main__':
