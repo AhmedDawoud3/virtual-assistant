@@ -14,6 +14,7 @@ from geopy.geocoders import Nominatim
 from welcome import *
 import screen_brightness_control as sbc
 from time import *
+from youtube_downloader import *
 from math import *
 from azan import *
 from voice_activation import *
@@ -21,6 +22,7 @@ from words import get_word
 from app_closer import closeApp
 from pyttsx3.drivers import sapi5
 import random
+from music_player import *
 
 version = 0.1
 
@@ -220,6 +222,42 @@ def main():
                             "who is ", "")
                         wb.open_new_tab(
                             f'https://www.google.com/search?q={search}')
+
+                # Download From Youtube
+                elif "download" in MyText:
+                    if 'music' in MyText:
+                        song = Speak(
+                            "Please write down the name of the song you want to download :")
+                        url = input(
+                            "Please write down the name of the song you want to download :")
+                        youtube_download(url, "music")
+                    elif "youtube" in MyText:
+                        Speak(
+                            "Please type the name of the video you want to download :")
+                        url = input(
+                            "Please type the name of the video you want to download :")
+                        youtube_download(url, "youtube")
+
+                # Music Player
+                elif "music" in MyText:
+                    if "play" in MyText:
+                        artist = MyText.replace("play music ", "")
+                        if artist == "play music":
+                            artist = get_word("artist")
+
+                        Speak(f"Playing {artist} Music")
+                        music, music_list = music_player(artist, music)
+
+                    elif "pause" in MyText or "stop" in MyText or "continue" in MyText:
+                        pause_music(music)
+
+                    elif "next" in MyText:
+                        if music == None:
+                            artist = get_word("artist") + " music"
+                            music, music_list = music_player(artist, music)
+                        else:
+                            Speak("Playing next music")
+                            music = next_music(music, music_list)
 
                 # Brightness Control
                 elif "brightness" in MyText:

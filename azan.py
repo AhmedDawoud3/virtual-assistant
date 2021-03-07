@@ -34,7 +34,6 @@ def get_prayer(city):
             difference = str(t2 - t1)
 
             if "-" not in difference:
-                print(difference)
                 if difference[1] == ":":
                     if difference[0] == "0":
                         return f"{int(str(difference)[2:4])} minutes left for Al {str(pray)}"
