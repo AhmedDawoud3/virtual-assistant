@@ -3,23 +3,35 @@ from pafy import new
 from app import Speak
 
 
-def youtube_download(search):
+def youtube_download(search, dType):
 
-    results = YoutubeSearch(search, max_results=1).to_dict()
+    if dType == "youtube":
 
-    url = "https://www.youtube.com" + str(results[0]["url_suffix"])
-    video = new(url)
+        results = YoutubeSearch(search, max_results=1).to_dict()
 
-    stream = video.allstreams
+        url = "https://www.youtube.com" + str(results[0]["url_suffix"])
+        video = new(url)
 
-    x = 0
+        stream = video.allstreams
 
-    for i in stream:
-        print(f"{x} : {i}")
-        x += 1
+        x = 0
 
-    Speak("Please Choose a quality")
-    q = input("Choose quality to download: ")
-    Speak("Downloading")
-    stream[int(q)].download()
-    Speak("Download completed")
+        for i in stream:
+            print(f"{x} : {i}")
+            x += 1
+
+        Speak("Please Choose a quality")
+        q = input("Choose quality to download: ")
+        Speak("Downloading")
+        stream[int(q)].download()
+        Speak("Download completed")
+    elif dType == 'music':
+        results = YoutubeSearch(search, max_results=1).to_dict()
+        url = "https://www.youtube.com" + str(results[0]["url_suffix"])
+        video = new(url)
+
+        stream = video.getbestaudio()
+
+        Speak("Downloading")
+        stream.download()
+        Speak("Download completed")

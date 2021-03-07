@@ -1,0 +1,35 @@
+# virtual-assistant - المساعد الصوتى
+
+                    المطوريين : أحمد داود و مصطفى ايهاب
+                            يوم 21 فبراير 2021
+
+
+فى البدية سيسالك عن اسمك و المدينة و الصوت المحبب لديك (تغيير الصوت لا يعمل فى ويندوز 7)
+يمكننك تعديلها لاحقا
+
+
+-**يمكنك استخدام اوامر متعددة مثل**:
+تغيير الاسم // ("Change My Name")
+تغيير المدينة // ("Change My City")
+تغيير الصوت // ("Change Voice")
+آلة حاسبة // ("480 minus 280", "5987 plus 5681", "1547 by 25", "125 divided by 5")
+الطقس // ("What is the weather")
+التاريخ // ("What is the date", "What Date is Today")
+موعد الآذان // ("What is the next prayer")
+الوقت // ("What is the time")
+ملاحظات ("Take Notes", "Delete Notes", "Read My notes")
+فتح تطبيق / برنامج // ("Open chrome", "Open zoom") :::"apps.json" يمكنك اضافت المزيد من البرامج فى ملف  
+فتح موفع على النت //("Open Youtube", "Open Facebook") :::"webstie.json" يمكنك إضافة المزيد من المواقع ب التعديل في ملف 
+اغلاق برنامج // ("Close chrome") :::task manager تأكد من أن الاسم هو نفسه الموجود في 
+بحث فى جوجل على شئ // ("Google the most used programming languages")
+السؤال بما هو ("What is machine learning", "Who is Mark Zuckerburg")
+سطوع الشاشة ("increase brightness", "decrease brightness", "maximum brightness", "minimum brightness")
+اغلاق الكومبيوتر ("Shutdown the PC", "Shutdown after 2 hours 25 minuts")
+إعادة تشغيل الكمبيوتر ("restart the PC", "restart after 2 hours 25 minuts")
+لاغلاق البرنامج ("quit", "bye")
+
+**للنسخة الغير مستقرة (Non-Stable)**
+التحميل من اليوتيوب("Download music from youtube", "Download from youtube")
+تشغيل اغاني ("play music", "play jazz music")
+
+-لإعادة تنشيطه Alt + V بعد إعطاء أي أمر اضغط

@@ -1,4 +1,4 @@
-from plyer import notification
+# from plyer import notification
 import speech_recognition as sr
 import pyttsx3
 import os
@@ -14,13 +14,16 @@ from geopy.geocoders import Nominatim
 from welcome import *
 import screen_brightness_control as sbc
 from time import *
-from youtube_downloader import *
 from math import *
 from azan import *
 from voice_activation import *
-from words import *
+from words import get_word
 from app_closer import closeApp
 from pyttsx3.drivers import sapi5
+import random
+
+version = 0.1
+
 r = sr.Recognizer()
 
 engine = pyttsx3.init()
@@ -39,6 +42,8 @@ def main():
     global username
     global city
     global voice
+    music = None
+    music_list = []
     if username == "":
         Speak("Hello. I'm your virtual assistant. What's your name?")
         username = input(
@@ -59,29 +64,6 @@ def main():
         data["city"] = city
         with open("user.json", "w") as f:
             f.write(json.dumps(data))
-
-    if voice == "":
-        for a in range(len(v)):
-            engine.setProperty('voice', (v[a]))
-            Speak(
-                f"For this voice press {a}")
-        c = input("Please Choose (0, 1) :")
-
-        while (c != "0" and c != "1"):
-            c = input("Please Choose (0, 1) :")
-
-        c = int(c)
-
-        data = json.load(open('user.json', ))
-        data["voice"] = c
-        with open("user.json", "w") as f:
-            f.write(json.dumps(data))
-        voice = data["voice"]
-
-    voices = engine.getProperty('voices')
-
-    engine.setProperty(
-        'voice', v[int(voice)])
 
     Speak(f"Good {welcome_mesage()} {username}")
     Speak(
@@ -124,6 +106,7 @@ def main():
                         Speak("What was That ?")
 
                 elif "weather" in MyText:
+                    Speak("Checking Weather")
                     Speak(
                         f"The weather in {city} is {weather_message()[0]}  degrees ,  and {weather_message()[1]}")
 
@@ -132,7 +115,7 @@ def main():
                           str(strftime('%B')) + str(strftime('%Y')))
 
                 elif "azan" in MyText or "pray" in MyText:
-                    Speak(get_prayer())
+                    Speak(get_prayer(city))
 
                 elif "time" in MyText:
                     Speak(
@@ -214,22 +197,30 @@ def main():
                     wb.open_new_tab(
                         f'https://www.google.com/search?q={search}')
 
-                elif "what is" in MyText:
+                elif "what is" in MyText or "what's" in MyText:
                     search = MyText.replace("what is ", "")
                     try:
                         print(wikipedia.summary(search))
                         Speak("According to wikipedia " +
-                              wikipedia.summary(search))
+                              str(wikipedia.summary(search, sentences=4)))
                     except:
                         search = MyText.replace(
                             "what is ", "")
                         wb.open_new_tab(
                             f'https://www.google.com/search?q={search}')
 
-                elif "download" in MyText and "youtube" in MyText:
-                    Speak("Please type the video you want to download")
-                    url = input("Please type the video you want to download :")
-                    youtube_download(url)
+                elif "who is" in MyText:
+                    search = MyText.replace("who is ", "")
+                    try:
+                        print(wikipedia.summary(search))
+                        Speak("According to wikipedia " +
+                              str(wikipedia.summary(search, sentences=4)))
+                    except:
+                        search = MyText.replace(
+                            "who is ", "")
+                        wb.open_new_tab(
+                            f'https://www.google.com/search?q={search}')
+
                 # Brightness Control
                 elif "brightness" in MyText:
                     old = sbc.get_brightness()
@@ -285,14 +276,14 @@ def main():
                     quit()
 
         except sr.RequestError as e:
+            Speak("Could not request results; {0}".format(e))
             print("Could not request results; {0}".format(e))
 
         except sr.UnknownValueError:
+            Speak("unknown error occured")
             print("unknown error occured")
 
         word = get_word("stand_by")
-        notification.notify(
-            title='Standing By', message=word, app_name='Virtual Assistant')
         sleep(1)
         Speak(word)
         stand_by()
@@ -303,6 +294,30 @@ def Speak(command):
     engine = pyttsx3.init()
     engine.say(command)
     engine.runAndWait()
+
+
+if voice == "":
+    for a in range(len(v)):
+        engine.setProperty('voice', (v[a]))
+        Speak(
+            f"For this voice press {a}")
+    c = input("Please Choose (0, 1) :")
+
+    while (c != "0" and c != "1"):
+        c = input("Please Choose (0, 1) :")
+
+    c = int(c)
+
+    data = json.load(open('user.json', ))
+    data["voice"] = c
+    with open("user.json", "w") as f:
+        f.write(json.dumps(data))
+    voice = data["voice"]
+
+voices = engine.getProperty('voices')
+
+engine.setProperty(
+    'voice', v[int(voice)])
 
 
 if __name__ == '__main__':
