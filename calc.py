@@ -17,10 +17,11 @@ def replace_theTexting_by_num(theText):
 
 
 def replace_expresions(MyText):
-    MyText =MyText.replace("by", "*")
-    MyText =MyText.replace("divide", "/")
-    MyText =MyText.replace("divided by", "/")
-    MyText =MyText.replace("over", "/")
+    MyText = MyText.replace("by", "*")
+    MyText = MyText.replace("divide", "/")
+    MyText = MyText.replace("divided by", "/")
+    MyText = MyText.replace("over", "/")
+    MyText = MyText.replace("minus", "-")
     if "square root" in MyText:
 
         MyText = MyText.replace("square root ", "sqrt(") + ")"

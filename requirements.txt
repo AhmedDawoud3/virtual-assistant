@@ -1,4 +1,5 @@
 plyer
+python-vlc
 pyaudio
 pyttsx3
 wikipedia

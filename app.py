@@ -24,6 +24,8 @@ from pyttsx3.drivers import sapi5
 import random
 from music_player import *
 
+version = 0.1
+
 r = sr.Recognizer()
 
 engine = pyttsx3.init()
@@ -115,7 +117,7 @@ def main():
                           str(strftime('%B')) + str(strftime('%Y')))
 
                 elif "azan" in MyText or "pray" in MyText:
-                    Speak(get_prayer())
+                    Speak(get_prayer(city))
 
                 elif "time" in MyText:
                     Speak(
@@ -256,14 +258,6 @@ def main():
                         else:
                             Speak("Playing next music")
                             music = next_music(music, music_list)
-
-                # elif "next" in MyText:
-                #     if music == None:
-                #         artist = get_word("artist") + " music"
-                #         music, music_list = music_player(artist, music)
-                #     else:
-                #         Speak("Playing next music")
-                #         music = next_music(music, music_list)
 
                 # Brightness Control
                 elif "brightness" in MyText:
