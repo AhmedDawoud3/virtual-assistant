@@ -299,3 +299,9 @@
 # # start playing video
 # media.play()
 # time.sleep(5)
+import os
+import shutil
+
+os.mkdir("testFolder")
+# os.rename("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
+shutil.move("testFile", "testFolder/testFile")

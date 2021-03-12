@@ -10,11 +10,14 @@ standBy = [
 runAfterStandBy = [
     "I'm still here",
     "Didn't go",
-    "at your service"
+    "at your service",
+    "alive",
+    "here",
+    "here we go again",
 ]
 
 
-artists = ["Jazz", "Rapp", "Classic", "Rock"]
+artists = ["Jazz", "Rap", "Classic", "Rock"]
 
 
 def get_word(keyword):

@@ -264,27 +264,28 @@ def main():
                     old = sbc.get_brightness()
                     if "increase" in MyText or "raise" in MyText:
                         sbc.set_brightness(old + 25)
-                        Speak(f"increasing brightness")
+                        speakPrint(f"increasing brightness")
                     elif "max" in MyText:
                         sbc.set_brightness(100)
-                        Speak(f"maximum brightness")
+                        speakPrint(f"maximum brightness")
                     elif "decrease" in MyText or "lower" in MyText:
-                        Speak(f"decreasing brightness")
+                        speakPrint(f"decreasing brightness")
                         sbc.set_brightness(old - 25)
                     elif "min" in MyText:
-                        Speak(f"Mnimun brightness")
+                        speakPrint(f"Mnimun brightness")
                         sbc.set_brightness(0)
                     else:
-                        Speak(f"Current brightness is {old}")
+                        speakPrint(f"Current brightness is {old}")
 
                 elif "close" in MyText:
                     MyText = MyText.replace("close ", "")
                     Speak(f"Closing {MyText}")
                     x = closeApp(MyText)
                     if not x:
-                        Speak(f"Nothing found")
+                        speakPrint(
+                            f"Nothing found, Please Make Sure That the name is the same in The Task Manager")
                     else:
-                        Speak(f"{x} Closed")
+                        speakPrint(f"{x} Closed")
 
                 # Shutdown
                 elif "shutdown" in MyText or "shut down" in MyText:
@@ -309,17 +310,15 @@ def main():
                             print(f"Restarting in {i}")
                             sleep(1)
                         os.system("shutdown -r")
-                elif "bye" in MyText or "quit" in MyText or "leave" in MyText:
+                elif "bye" in MyText or "quit" in MyText or "leave" in MyText or "stop" in MyText or "adios" in MyText:
                     Speak("it was an honor serving here ")
                     quit()
 
         except sr.RequestError as e:
-            Speak("Could not request results; {0}".format(e))
-            print("Could not request results; {0}".format(e))
+            speakPrint("Could not request results; {0}".format(e))
 
         except sr.UnknownValueError:
-            Speak("unknown error occured")
-            print("unknown error occured")
+            speakPrint("unknown error occured")
 
         word = get_word("stand_by")
         sleep(1)
@@ -332,6 +331,17 @@ def Speak(command):
     engine = pyttsx3.init()
     engine.say(command)
     engine.runAndWait()
+
+
+def speakPrint(string):
+    Speak(string)
+    print(string)
+
+
+def speakInput(string):
+    Speak(string)
+    x = input(string)
+    return x
 
 
 if voice == "":
