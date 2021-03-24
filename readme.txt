@@ -2,9 +2,9 @@
 
                     Developers: Ahmed Dawoud & Mostafa Ehab
                     Version 0.1 Pre-Alpha, 21 Feb, 2021
-
+                    
 At first it will ask for "Your name", "Your City" and "What voice would you like to use" (voice changing doesn't work with Windows 7)
-_You can Change them later_
+*You can change them later*
 
 -**You can use various commands like**:
 Change name // ("Change My Name")
