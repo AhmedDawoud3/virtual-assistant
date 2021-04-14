@@ -1,6 +1,6 @@
 from youtube_search import YoutubeSearch
 from pafy import new
-from app import Speak, speakPrint
+import app
 import shutil
 import os.path
 from os import path
@@ -22,21 +22,21 @@ def youtube_download(search, dType):
             print(f"{x} : {i}")
             x += 1
 
-        Speak("Please Choose a quality")
+        app.Speak("Please Choose a quality")
         if path.exists('Downloaded Videos') == False:
-            speakPrint(
+            app.speakPrint(
                 "Please Note That\n'audio' is audio only without video,\n'video' is video without audio,\n'normal' is both")
         q = input("Choose quality to download: ")
         if path.exists('Downloaded Videos') == False:
             os.mkdir("Downloaded Videos")
-            speakPrint(
+            app.speakPrint(
                 '"Downloaded Videos" folder has successfully been created')
 
         fileName = str(stream[int(q)].filename)
-        Speak("Downloading")
+        app.Speak("Downloading")
         stream[int(q)].download()
         shutil.move(fileName, f"Downloaded Videos/{fileName}")
-        Speak("Download completed")
+        app.Speak("Download completed")
     elif dType == 'music':
         results = YoutubeSearch(search, max_results=1).to_dict()
         url = "https://www.youtube.com" + str(results[0]["url_suffix"])
@@ -48,9 +48,10 @@ def youtube_download(search, dType):
         fileName = str(stream.filename)
         if path.exists('Downloaded Music') == False:
             os.mkdir("Downloaded Music")
-            speakPrint(
+            app.speakPrint(
                 '"Downloaded Music" folder has successfully been created')
-        Speak("Downloading")
+        app.Speak("Downloading")
         stream.download()
         shutil.move(fileName, f"Downloaded Music/{fileName}")
-        Speak("Download completed")
+        app.Speak("Download completed")
+        app.speakPrint('Remember That You can convert the music to mp3\nJust say "Convert"')

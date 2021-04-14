@@ -14,7 +14,7 @@ from geopy.geocoders import Nominatim
 from welcome import *
 import screen_brightness_control as sbc
 from time import *
-from youtube_downloader import *
+import youtube_downloader
 from math import *
 from azan import *
 from voice_activation import *
@@ -23,6 +23,8 @@ from app_closer import closeApp
 from pyttsx3.drivers import sapi5
 import random
 from music_player import *
+import fileConverter
+from os import path
 
 version = 0.1
 
@@ -66,6 +68,13 @@ def main():
         data["city"] = city
         with open("user.json", "w") as f:
             f.write(json.dumps(data))
+
+    if not path.exists('Utils\\ffmpeg.exe'):
+        print("Please Make Sure To Download The Utils (FFMPEG.exe was not found)")
+        Speak(
+            "Please Make Sure To Download The Utils (F F M P E G dot exe was not found)")
+        sleep(10)
+        return False
 
     Speak(f"Good {welcome_mesage()} {username}")
     Speak(
@@ -226,17 +235,16 @@ def main():
                 # Download From Youtube
                 elif "download" in MyText:
                     if 'music' in MyText:
-                        song = Speak(
+                        url = speakInput(
                             "Please write down the name of the song you want to download :")
-                        url = input(
-                            "Please write down the name of the song you want to download :")
-                        youtube_download(url, "music")
+                        youtube_downloader.youtube_download(url, "music")
                     elif "youtube" in MyText:
-                        Speak(
+                        url = speakInput(
                             "Please type the name of the video you want to download :")
-                        url = input(
-                            "Please type the name of the video you want to download :")
-                        youtube_download(url, "youtube")
+                        youtube_downloader.youtube_download(url, "youtube")
+
+                elif "convert" in MyText:
+                    fileConverter.convertFile()
 
                 # Music Player
                 elif "music" in MyText:
