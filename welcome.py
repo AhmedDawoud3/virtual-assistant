@@ -18,7 +18,7 @@ def welcome_mesage():
 
 
 def weather_message():
-    data = json.load(open('user.json',))
+    data = json.load(open('Data\\user.json',))
     city = data["city"]
     geolocator = Nominatim(user_agent='myapplication')
     lat = str(geolocator.geocode(city).raw["lat"])

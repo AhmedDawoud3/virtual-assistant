@@ -27,7 +27,7 @@ import fileConverter
 from os import path
 from VerionsHandler import CheckUpdate
 
-version = 0.01
+version = 0.2
 
 r = sr.Recognizer()
 
@@ -37,7 +37,7 @@ engine = pyttsx3.init()
 numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 v = ["HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0",
      "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"]
-data = json.load(open('user.json',))
+data = json.load(open('Data\\user.json',))
 username = data["username"]
 city = data["city"]
 voice = data["voice"]
@@ -53,9 +53,9 @@ def main():
         Speak("Hello. I'm your virtual assistant. What's your name?")
         username = input(
             "Hello I'm your virtual assistant What's your name?\n")
-        data = json.load(open('user.json', ))
+        data = json.load(open('Data\\user.json', ))
         data["username"] = username
-        with open("user.json", "w") as f:
+        with open("Data\\user.json", "w") as f:
             f.write(json.dumps(data))
     if city == "":
         while True:
@@ -65,9 +65,9 @@ def main():
             location = geolocator.geocode(city)
             if location != None:
                 break
-        data = json.load(open('user.json', ))
+        data = json.load(open('Data\\user.json', ))
         data["city"] = city
-        with open("user.json", "w") as f:
+        with open("Data\\user.json", "w") as f:
             f.write(json.dumps(data))
 
     if not path.exists('Utils\\ffmpeg.exe'):
@@ -137,9 +137,9 @@ def main():
                     Speak("What's your name?")
                     username = input(
                         "What's your name?\n")
-                    data = json.load(open('user.json', ))
+                    data = json.load(open('Data\\user.json', ))
                     data["username"] = username
-                    with open("user.json", "w") as f:
+                    with open("Data\\user.json", "w") as f:
                         f.write(json.dumps(data))
 
                 elif "change" in MyText and "city" in MyText:
@@ -150,9 +150,9 @@ def main():
                         location = geolocator.geocode(city)
                         if location != None:
                             break
-                    data = json.load(open('user.json', ))
+                    data = json.load(open('Data\\user.json', ))
                     data["city"] = city
-                    with open("user.json", "w") as f:
+                    with open("Data\\user.json", "w") as f:
                         f.write(json.dumps(data))
 
                 # Voice Changing
@@ -166,9 +166,9 @@ def main():
                         if c in ("0", "1"):
                             c = int(c)
                             break
-                    data = json.load(open('user.json', ))
+                    data = json.load(open('Data\\user.json', ))
                     data["voice"] = c
-                    with open("user.json", "w") as f:
+                    with open("Data\\user.json", "w") as f:
                         f.write(json.dumps(data))
 
                     voices = engine.getProperty('voices')
@@ -179,7 +179,7 @@ def main():
                 # Notes
                 elif "note" in MyText:
                     if "take" in MyText:
-                        with open("notes.txt", "a") as f:
+                        with open("Data\\notes.txt", "a") as f:
                             Speak("Please Type Your Notes")
                             notes = input("Please Type Your Notes :\n")
                             f.write(notes + "\n")
@@ -187,10 +187,10 @@ def main():
                         Speak("Your Notes Will Be Deleted. Are You Sure")
                         notes = input("Are you sure (Y/N):\n")
                         if notes.lower() == "y":
-                            with open("notes.txt", "w") as f:
+                            with open("Data\\notes.txt", "w") as f:
                                 f.write("")
                     else:
-                        with open("notes.txt", "r") as f:
+                        with open("Data\\notes.txt", "r") as f:
                             Speak(f.read())
 
                 # Open Programmes
@@ -374,9 +374,9 @@ if voice == "":
 
     c = int(c)
 
-    data = json.load(open('user.json', ))
+    data = json.load(open('Data\\user.json', ))
     data["voice"] = c
-    with open("user.json", "w") as f:
+    with open("Data\\user.json", "w") as f:
         f.write(json.dumps(data))
     voice = data["voice"]
 

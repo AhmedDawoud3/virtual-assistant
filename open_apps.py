@@ -13,7 +13,7 @@ def openApp(MyText):
     if "internet" in MyText or "browser" in MyText:
         wb.open_new_tab('http://www.google.com')
     else:
-        f = open('apps.json',)
+        f = open('Data\\apps.json',)
 
         data = json.load(f)
 
@@ -30,7 +30,7 @@ def openApp(MyText):
 
         f.close()
 
-        f = open('websites.json',)
+        f = open('Data\\websites.json',)
 
         data = json.load(f)
 
