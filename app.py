@@ -25,8 +25,9 @@ import random
 from music_player import *
 import fileConverter
 from os import path
+from VerionsHandler import CheckUpdate
 
-version = 0.1
+version = 0.01
 
 r = sr.Recognizer()
 
@@ -121,7 +122,7 @@ def main():
                     Speak(
                         f"The weather in {city} is {weather_message()[0]}  degrees ,  and {weather_message()[1]}")
 
-                elif "date" in MyText:
+                elif "date" in MyText and not "update" in MyText:
                     Speak("Today is " + str(strftime('%A')) + str(int(strftime('%d'))) +
                           str(strftime('%B')) + str(strftime('%Y')))
 
@@ -294,7 +295,16 @@ def main():
                             f"Nothing found, Please Make Sure That the name is the same in The Task Manager")
                     else:
                         speakPrint(f"{x} Closed")
-
+                elif "check" in MyText and "update" in MyText:
+                    if CheckUpdate(version):
+                        speakPrint("Update Available")
+                        wb.open_new_tab(
+                            'https://thevirtualassistant.netlify.app/')
+                    else:
+                        speakPrint("You Are Running The Latest Version")
+                elif "help" in MyText:
+                    Speak("Check out our website")
+                    wb.open_new_tab('https://thevirtualassistant.netlify.app/')
                 # Shutdown
                 elif "shutdown" in MyText or "shut down" in MyText:
                     if "after" in MyText:
