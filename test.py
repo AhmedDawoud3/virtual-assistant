@@ -89,21 +89,21 @@ class ModelTest(unittest.TestCase):
     #     model = Model()
     #     self.assertTrue(model.process("google ai"))
 
-    # def test_brightness_increase(self):
-    #     model = Model()
-    #     self.assertTrue(model.process("increase brightness"))
+    def test_brightness_increase(self):
+        model = Model()
+        self.assertTrue(model.process("increase brightness"))
 
-    # def test_brightness_decrease(self):
-    #     model = Model()
-    #     self.assertTrue(model.process("decrease brightness"))
+    def test_brightness_decrease(self):
+        model = Model()
+        self.assertTrue(model.process("decrease brightness"))
 
-    # def test_brightness_maximum(self):
-    #     model = Model()
-    #     self.assertTrue(model.process("maximum brightness"))
+    def test_brightness_maximum(self):
+        model = Model()
+        self.assertTrue(model.process("maximum brightness"))
 
-    # def test_brightness_minimum(self):
-    #     model = Model()
-    #     self.assertTrue(model.process("minimum brightness"))
+    def test_brightness_minimum(self):
+        model = Model()
+        self.assertTrue(model.process("minimum brightness"))
 
     def test_get_brightness(self):
         model = Model()
