@@ -3,7 +3,7 @@ import screen_brightness_control as sbc
 
 class Brightness:
     def __init__(self):
-        self.old = sbc.get_brightness()
+        self.old = sbc.get_brightness()[0]
 
     def get_current_value(self):
         return self.old

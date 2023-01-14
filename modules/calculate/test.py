@@ -68,6 +68,11 @@ class Calc_test(unittest.TestCase):
         calc.can_calculate("3 by square root 4")
         self.assertEqual(calc.get_result(), "The answer is 6")
 
+    def test_zero_division_msg(self):
+        calc = Calculate()
+        calc.can_calculate("3 divided by 0")
+        self.assertEqual(calc.get_result(), "): Can't divide by zero")
+
 
 if __name__ == "__main__":
     unittest.main()
