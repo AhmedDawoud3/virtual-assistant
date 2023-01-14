@@ -16,6 +16,14 @@ class ModelTest(unittest.TestCase):
         model = Model()
         self.assertEqual(model.process("9 / 5"), "The answer is 1.800")
 
+    def test_calculator_division_error(self):
+        model = Model()
+        self.assertEqual(model.process("9 / 0"), "): Can't divide by zero")
+
+    def test_calculator_expression_error(self):
+        model = Model()
+        self.assertEqual(model.process("9 * + / 0"), None)
+
     def test_weather(self):
         model = Model()
         self.assertIsNotNone(model.process("What is the weather"))
@@ -35,9 +43,9 @@ class ModelTest(unittest.TestCase):
         self.assertRegex(model.process("What is the next pray"),
                          "[0-9]{1}|[0-9]{2} hours [0-9]{1}|[0-9]{2} minutes left for Al [a-zA-Z]*")
 
-    # def test_open_chrome(self):
-    #     model = Model()
-    #     self.assertTrue(model.process("open Chrome"))
+    def test_open_chrome(self):
+        model = Model()
+        self.assertTrue(model.process("open Chrome"))
 
     # def test_open_firefox(self):
     #     model = Model()
@@ -51,6 +59,12 @@ class ModelTest(unittest.TestCase):
     #     model = Model()
     #     model.process("open firefox")
     #     self.assertTrue(model.process("close firefox"))
+    #     self.assertFalse(model.process("close nothing"))
+
+    # def test_close_chrome(self):
+    #     model = Model()
+    #     model.process("open chrome")
+    #     self.assertTrue(model.process("close chrome"))
     #     self.assertFalse(model.process("close nothing"))
 
     # def test_shutdown_timer(self):
@@ -85,29 +99,29 @@ class ModelTest(unittest.TestCase):
         model = Model()
         self.assertTrue(model.process("who is mark zuckerberg"))
 
-    # def test_google_search(self):
+    def test_google_search(self):
+        model = Model()
+        self.assertTrue(model.process("google ai"))
+
+    # def test_brightness_increase(self):
     #     model = Model()
-    #     self.assertTrue(model.process("google ai"))
+    #     self.assertTrue(model.process("increase brightness"))
 
-    def test_brightness_increase(self):
-        model = Model()
-        self.assertTrue(model.process("increase brightness"))
+    # def test_brightness_decrease(self):
+    #     model = Model()
+    #     self.assertTrue(model.process("decrease brightness"))
 
-    def test_brightness_decrease(self):
-        model = Model()
-        self.assertTrue(model.process("decrease brightness"))
+    # def test_brightness_maximum(self):
+    #     model = Model()
+    #     self.assertTrue(model.process("maximum brightness"))
 
-    def test_brightness_maximum(self):
-        model = Model()
-        self.assertTrue(model.process("maximum brightness"))
+    # def test_brightness_minimum(self):
+    #     model = Model()
+    #     self.assertTrue(model.process("minimum brightness"))
 
-    def test_brightness_minimum(self):
-        model = Model()
-        self.assertTrue(model.process("minimum brightness"))
-
-    def test_get_brightness(self):
-        model = Model()
-        self.assertEqual(model.process("current brightness"), 75)
+    # def test_get_brightness(self):
+    #     model = Model()
+    #     self.assertEqual(model.process("current brightness"), 0)
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ class Open:
             return False
 
     def search_apps(text):
-        with open(os.path.join("..", "data", "apps.json"), "r") as f:
+        with open(os.path.join("data", "apps.json"), "r") as f:
             data = json.loads(f.read())
             for app in data:
                 if text in app:
@@ -32,7 +32,7 @@ class Open:
         return False
 
     def search_websites(text):
-        with open(os.path.join("..", "data", "websites.json"), "r") as f:
+        with open(os.path.join("data", "websites.json"), "r") as f:
             data = json.loads(f.read())
             for site in data:
                 if text in site:
