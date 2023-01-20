@@ -3,15 +3,18 @@ from time import sleep
 
 
 class Restart:
-    def __init__(self, text):
+    def restart(self, text):
         if "after" in text or " in " in text:
             time = (self.get_hours(text) * 3600 + self.get_minutes(text) * 60)
             os.system(f"Shutdown -r -t {time}")
+            return (True, "Scheduling restart")
         else:
-            for i in range(11, 0, -1):
-                print(f"Shutting down in {i}")
-                sleep(1)
-            os.system("shutdown -r")
+            # TODO
+            return
+            # for i in range(11, 0, -1):
+            #     print(f"Restarting in {i}")
+            #     sleep(1)
+            # os.system("shutdown -r")
 
     def get_hours(self, text):
         hour_found = False

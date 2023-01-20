@@ -37,6 +37,6 @@ Brightness					Done
 Close App					Done
 Check Update
 Help
-Shutdown					Done
-Restart				       	Done
+Shutdown					Done -- Need Fixing
+Restart				       	Done -- Need Fixing
 Bye - Quit - Leave - Stop - adios

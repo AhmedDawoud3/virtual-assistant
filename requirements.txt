@@ -11,3 +11,4 @@ youtube_search
 pafy
 youtube_dl
 keyboard
+pillow

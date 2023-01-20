@@ -9,15 +9,16 @@ class Open:
     def search(text):
         if "internet" in text or "browser" in text:
             wb.open_new_tab('http://www.google.com')
+            return "Opening..."
         else:
             if Open.search_apps(text):
-                return True
+                return f"Opening {text}..."
 
             if Open.search_websites(text):
-                return True
+                return f"Opening {text}..."
 
             wb.open_new_tab(f'https://www.google.com/search?q={text}')
-            return False
+            return "There is some results from the web"
 
     def search_apps(text):
         with open(os.path.join("data", "apps.json"), "r") as f:
