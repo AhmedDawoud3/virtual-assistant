@@ -6,66 +6,56 @@ from os import path
 
 
 class Download:
-    def youtube_search(self, text):
-        results = YoutubeSearch(text, max_results=1).todict()
+    def youtube_search(self, title):
+        results = YoutubeSearch(title, max_results=1).to_dict()
         url = "https://www.youtube.com" + str(results[0]["url_suffix"])
         video = new(url)
         self.stream = video.allstreams
+        self.bestaudio = video.getbestaudio()
 
-        return self.stream
+    def youtube_download(self, _in, _out):
+        title = _in("Please enter the title of the video: ")
+        self.youtube_search(title)
 
-    def youtube_download(self):
         for i in range(len(self.stream)):
-            print(f"{i}: {self.stream[i]}")
-            print("Choose the quality")
+            _out(f"{i}: {self.stream[i]}")
 
-    # def youtube_download(search, dType):
+        # For first time users
+        if path.exists('Downloaded Videos') == False:
+            _out("Please Note That:")
+            _out("'audio' is audio only without video")
+            _out("'video' is video without audio")
+            _out("'normal' is both")
 
-    #     if dType == "youtube":
-    #         results = YoutubeSearch(search, max_results=1).to_dict()
+        quality = _in("Choose the quality to download: ")
 
-    #         url = "https://www.youtube.com" + str(results[0]["url_suffix"])
-    #         video = new(url)
+        # For first time users
+        if path.exists('Downloaded Videos') == False:
+            os.mkdir("Downloaded Videos")
+            _out('"Downloaded Videos" folder has successfully been created')
 
-    #         stream = video.allstreams
+        # Starrt downloading
+        fileName = str(self.stream[int(quality)].filename)
+        _out("Downloading")
+        self.stream[int(quality)].download()
+        shutil.move(fileName, f"Downloaded Videos/{fileName}")
+        _out("Download completed")
 
-    #         x = 0
+    def music_download(self, _in, _out):
+        title = _in("Please enter the title of the music: ")
+        self.youtube_search(title)
 
-    #         for i in stream:
-    #             print(f"{x} : {i}")
-    #             x += 1
+        # For first time users
+        if path.exists('Downloaded Music') == False:
+            os.mkdir("Downloaded Music")
+            _out('"Downloaded Music" folder has successfully been created')
 
-    #         app.Speak("Please Choose a quality")
-    #         if path.exists('Downloaded Videos') == False:
-    #             app.speakPrint(
-    #                 "Please Note That\n'audio' is audio only without video,\n'video' is video without audio,\n'normal' is both")
-    #         q = input("Choose quality to download: ")
-    #         if path.exists('Downloaded Videos') == False:
-    #             os.mkdir("Downloaded Videos")
-    #             app.speakPrint(
-    #                 '"Downloaded Videos" folder has successfully been created')
+        # Start Downloading
+        fileName = str(self.bestaudio.filename)
+        _out("Downloading")
+        self.bestaudio.download()
+        shutil.move(fileName, f"Downloaded Music/{fileName}")
+        _out("Download completed")
 
-    #         fileName = str(stream[int(q)].filename)
-    #         app.Speak("Downloading")
-    #         stream[int(q)].download()
-    #         shutil.move(fileName, f"Downloaded Videos/{fileName}")
-    #         app.Speak("Download completed")
-    #     elif dType == 'music':
-    #         results = YoutubeSearch(search, max_results=1).to_dict()
-    #         url = "https://www.youtube.com" + str(results[0]["url_suffix"])
-    #         video = new(url)
-
-    #         stream = video.getbestaudio()
-
-    #         # getting filename of stream
-    #         fileName = str(stream.filename)
-    #         if path.exists('Downloaded Music') == False:
-    #             os.mkdir("Downloaded Music")
-    #             app.speakPrint(
-    #                 '"Downloaded Music" folder has successfully been created')
-    #         app.Speak("Downloading")
-    #         stream.download()
-    #         shutil.move(fileName, f"Downloaded Music/{fileName}")
-    #         app.Speak("Download completed")
-    #         app.speakPrint(
-    #             'Remember That You can convert the music to mp3\nJust say "Convert"')
+        # Has no meaning (:
+        _out('Remember That You can convert the music to mp3\nJust say "Convert"')

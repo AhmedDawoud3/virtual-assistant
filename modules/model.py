@@ -59,15 +59,13 @@ class Model:
             Wiki.google_search(text)
             return (True, "This is some results from the web")
 
-        # elif "download" in text:
-        #     text = text.replace("download ", "")
-        #     download = Download()
-        #     if "youtube" in text:
-        #         text = text.replace("youtube", "")
-        #         if download.youtube_search():
-        #             download.youtube_download()
-        #     elif "music" in text:
-        #         text = text.replace("music", "")
+        elif "download" in text:
+            text = text.replace("download ", "")
+            download = Download()
+            if "youtube" in text:
+                return (False, download.youtube_download)
+            elif "music" in text:
+                return (False, download.music_download)
 
         elif "brightness" in text:
             brightness = Brightness()
