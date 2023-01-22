@@ -9,12 +9,13 @@ class Shutdown:
             os.system(f"Shutdown -s -t {time}")
             return (True, "Scheduling shutdown")
         else:
-            # TODO
-            return
-            # for i in range(11, 0, -1):
-            #     # yield (f"Shutting down in {i}")
-            #     sleep(1)
-            # os.system("shutdown -s")
+            return (False, self.immidiate_shutdown)
+
+    def immidiate_shutdown(self, _in, _out):
+        for i in range(11, 0, -1):
+            _out(f"Shutting down in {i}")
+            sleep(1)
+        os.system("shutdown -s")
 
     def get_hours(self, text):
         hour_found = False

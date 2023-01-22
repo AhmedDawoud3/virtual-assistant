@@ -6,15 +6,17 @@ class Restart:
     def restart(self, text):
         if "after" in text or " in " in text:
             time = (self.get_hours(text) * 3600 + self.get_minutes(text) * 60)
+            print(time)
             os.system(f"Shutdown -r -t {time}")
             return (True, "Scheduling restart")
         else:
-            # TODO
-            return
-            # for i in range(11, 0, -1):
-            #     print(f"Restarting in {i}")
-            #     sleep(1)
-            # os.system("shutdown -r")
+            return (False, self.immidiate_restart)
+
+    def immidiate_restart(self, _in, _out):
+        for i in range(11, 0, -1):
+            _out(f"Restarting in {i}")
+            sleep(1)
+        os.system("shutdown -r")
 
     def get_hours(self, text):
         hour_found = False

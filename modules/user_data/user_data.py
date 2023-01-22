@@ -1,6 +1,8 @@
 import json
 import os
 
+from geopy.geocoders import Nominatim
+
 
 class UserData:
     def __init__(self):
@@ -32,3 +34,32 @@ class UserData:
     def set_voice(self, voice):
         self.data['voice'] = voice
         self.update_data_file()
+
+    def change_name(self, _in, _out):
+        _out("What's your name?")
+        name = _in("")
+        self.set_name(name)
+
+    # For External use in model
+    def change_city(self, _in, _out):
+        while True:
+            _out("Please Enter Your City :")
+            city = _in("")
+            geolocator = Nominatim(user_agent='myapplication')
+            location = geolocator.geocode(city)
+            if location != None:
+                break
+        self.set_city(city)
+
+    def change_voice(self, _in, _out, engine, v):
+        for a in range(len(v)):
+            engine.setProperty('voice', (v[a]))
+            _out(f"For this voice press {a}")
+        c = _in("Please Choose (0, 1) :")
+
+        while (c != "0" and c != "1"):
+            c = _in("Please Choose (0, 1) :")
+
+        c = int(c)
+        self.set_voice(c)
+        engine.setProperty('voice', v[int(self.get_voice())])

@@ -16,7 +16,7 @@ class Wiki:
             return False
 
     def get_result(self):
-        return self.result
+        return f"According to wikipedia: {self.result}"
 
     def google_search(text):
         wb.open_new_tab(f'https://www.google.com/search?q={text}')
