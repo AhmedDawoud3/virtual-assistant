@@ -39,6 +39,10 @@ class Main():
             elif respond[0] == 4001:
                 respond[1](self._in, self._out, self.engine, self.v)
 
+            # A response that call for exit function to safety exit
+            elif respond[0] == 4002:
+                respond[1](self._in, self._out, self.app_exit)
+
     def _in(self, text):
         # self.engine.say(text)
         # self.engine.runAndWait()
@@ -48,6 +52,9 @@ class Main():
         print(text)
         self.engine.say(text)
         self.engine.runAndWait()
+
+    def app_exit(self):
+        quit()
 
 
 if __name__ == "__main__":
