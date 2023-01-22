@@ -1,16 +1,16 @@
-Welcome Phrase
-Get data from first time users
+Welcome Phrase					Done
+Get data from first time users	Done
 Calculator					    Done
 	-- Error handler			Done
-Hello to you too
+Hello to you too				Done
 Weather					        Done
 Date					    	Done
 Pray					       	Done
 Time				    		Done
-Change user data
-	-- Name
-	-- City
-	-- Voice
+Change user data				Done
+	-- Name						Done
+	-- City						Done
+	-- Voice					Done
 Note
 	-- Take
 	-- Delete

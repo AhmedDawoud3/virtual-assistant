@@ -11,18 +11,23 @@ from modules.download.download import Download
 from modules.system.brightness import Brightness
 from modules.system.shutdown import Shutdown
 from modules.system.restart import Restart
+import json
 
 
 class Model:
     def __init__(self):
-        data = UserData()
-        self.name = data.get_name()
-        self.city = data.get_city()
+        self.data = UserData()
+        self.name = self.data.get_name()
+        self.city = self.data.get_city()
+        self.voice = self.data.get_voice()
 
     def process(self, text):
         text = text.lower()
 
         calc = Calculate()
+
+        if "hello" in text:
+            return (True, "Hello to you too!")
         if calc.can_calculate(text):
             return (True, calc.get_result())
 
@@ -37,6 +42,15 @@ class Model:
 
         elif "pray" in text or "azan" in text:
             return (True, Prayer(self.city))
+
+        elif "change" in text and "name" in text:
+            return (False, self.data.change_name)
+
+        elif "change" in text and "city" in text:
+            return (False, self.data.change_city)
+
+        elif "change" in text and "voice" in text:
+            return (4001, self.data.change_voice)
 
         elif "open" in text:
             text = text.replace("open ", "")
@@ -97,4 +111,21 @@ class Model:
         elif "restart" in text:
             restart = Restart()
             return restart.restart(text)
-        return (False, "Sorry I didn't understand")
+        return (True, "Sorry I didn't understand")
+
+    def check_user_data(self, _in, _out, engine, v):
+        # Check the username
+        if self.name == "":
+            _out("Hello I'm your virtual assistant.")
+            self.data.change_name(_in, _out)
+            self.name = self.data.get_name()
+
+        # Check the city
+        if self.city == "":
+            self.data.change_city(_in, _out)
+            self.city = self.data.get_city()
+
+        # Check the voice
+        if self.voice == "":
+            self.data.change_voice(_in, _out, engine, v)
+            self.voice = self.data.get_voice()
