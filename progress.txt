@@ -14,29 +14,29 @@ Change user data				Done
 Note
 	-- Take
 	-- Delete
-Open						Done
-	-- App			    	Done
-	-- Internet search		Done
-Internet search				Done
-	-- Google				Done
-	-- What is				Done
-	-- Who is				Done
-Download					Done
-	-- youtube video		Done
-	-- youtube music		Done
+Open							Done
+	-- App			    		Done
+	-- Internet search			Done
+Internet search					Done
+	-- Google					Done
+	-- What is					Done
+	-- Who is					Done
+Download						Done
+	-- youtube video			Done
+	-- youtube music			Done
 Convert file
-Music
-	-- play
-	-- pause
-	-- next
-Brightness					Done
-	-- increase				Done
-	-- decrease				Done
-	-- minimum				Done
-	-- maximum				Done
-Close App					Done
+Music							Done
+	-- play						Done
+	-- pause					Done
+	-- next						Done
+Brightness						Done
+	-- increase					Done
+	-- decrease					Done
+	-- minimum					Done
+	-- maximum					Done
+Close App						Done
 Check Update
 Help
-Shutdown					Done -- Need Fixing
-Restart				       	Done -- Need Fixing
+Shutdown						Done
+Restart							Done
 Bye - Quit - Leave - Stop - adios

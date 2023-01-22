@@ -30,6 +30,7 @@ def replace_expressions(text):
 
 
 def is_math_expression(text):
+    calc = False
     for i in text:
         calc = True if i in numbers else False
     if calc == False:

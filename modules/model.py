@@ -8,6 +8,7 @@ from modules.search.open import Open
 from modules.search.wiki import Wiki
 from modules.search.close import Close
 from modules.download.download import Download
+from modules.media.music import Music
 from modules.system.brightness import Brightness
 from modules.system.shutdown import Shutdown
 from modules.system.restart import Restart
@@ -20,6 +21,8 @@ class Model:
         self.name = self.data.get_name()
         self.city = self.data.get_city()
         self.voice = self.data.get_voice()
+
+        self.music = Music()
 
     def process(self, text):
         text = text.lower()
@@ -81,6 +84,33 @@ class Model:
             elif "music" in text:
                 return (False, download.music_download)
 
+        elif "music" in text:
+            if "play" in text:
+                text = text.replace("play music ", "")
+                self.music.search_and_play(text)
+                return (True, "Playing music")
+
+            elif "pause" in text or "stop" in text or "continue" in text:
+                if self.music.music == None:
+                    self.music.search_and_play("baby shark")
+                else:
+                    self.music.pause_continue()
+                return (True, "Ok")
+
+            elif "next" in text:
+                if self.music.music == None:
+                    self.music.search_and_play("baby shark")
+                else:
+                    self.music.next()
+                return (True, "Playing next music...")
+
+            elif "prev" in text:
+                if self.music.music == None:
+                    self.music.search_and_play("baby shark")
+                else:
+                    self.music.prev()
+                return (True, "Playing previous music...")
+
         elif "brightness" in text:
             brightness = Brightness()
             if "increase" in text or "raise" in text:
@@ -111,6 +141,10 @@ class Model:
         elif "restart" in text:
             restart = Restart()
             return restart.restart(text)
+
+        elif "bye" in text or "quit" in text or "leave" in text or "stop" in text or "adios" in text:
+            return (4002, self.model_exit_msg)
+
         return (True, "Sorry I didn't understand")
 
     def check_user_data(self, _in, _out, engine, v):
@@ -129,3 +163,7 @@ class Model:
         if self.voice == "":
             self.data.change_voice(_in, _out, engine, v)
             self.voice = self.data.get_voice()
+
+    def model_exit_msg(self, _in, _out, app_exit):
+        _out("It was an honor serving here")
+        app_exit()
