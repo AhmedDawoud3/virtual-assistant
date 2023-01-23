@@ -7,8 +7,15 @@ from geopy.geocoders import Nominatim
 class UserData:
     def __init__(self):
         self.path = os.path.join("data", "user.json")
-        with open(self.path, "r") as f:
-            self.data = json.loads(f.read())
+        if os.path.exists(self.path):
+            with open(self.path, "r") as f:
+                self.data = json.loads(f.read())
+        else:
+            self.data = {
+                'username': "",
+                'city': '',
+                'voice': 1
+            }
 
     def update_data_file(self):
         with open(self.path, "w") as f:
