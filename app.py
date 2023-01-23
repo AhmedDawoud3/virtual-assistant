@@ -25,15 +25,12 @@ class Main():
         gui.daemon = True
         gui.start()
 
-        # Start speech recognition module
-        self.recognise = sr.Recognizer()
-
-        # Check user data
-        model.check_user_data(self. _in, self._out, self.engine, self.v)
-
         # make sure that GUI has been initialized
         while not self.gui.is_ready:
             continue
+
+        # Check user data
+        model.check_user_data(self. _in, self._out, self.engine, self.v)
 
         # Welcome message
         self._out(f"Good {welcome_mesage()} {model.name}")
