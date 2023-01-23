@@ -1,5 +1,6 @@
 from time import gmtime, strftime
 import random
+from os import path
 
 
 hour_now = int(strftime("%H"))
@@ -42,3 +43,9 @@ def get_word(keyword):
         return random.choice(runAfterStandBy)
     elif keyword == "artist":
         return random.choice(artists)
+
+
+def check_ffmpeg():
+    if not path.exists('Utils\\ffmpeg.exe'):
+        return False
+    return True

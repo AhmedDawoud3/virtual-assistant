@@ -45,6 +45,13 @@ class Main():
         self._out(f"Good {welcome_mesage()} {model.name}")
         self._out(model.process("get time")[1])
 
+        # Check existence of FFMPEG
+        if not check_ffmpeg():
+            self._out(
+                "Please Make Sure To Download The Utils (FFMPEG.exe was not found)", silent=True)
+            self._out(
+                "Please Make Sure To Download The Utils (F F M P E G dot exe was not found)", write=False)
+
         # Start Main loop
         while True:
             command = self._in("")
@@ -87,7 +94,7 @@ class Main():
                 with sr.Microphone() as source2:
                     # Get command from Microphone
                     try:
-                        self.say(get_word("after_stand_by"))
+                        self._out(get_word("after_stand_by"), write=False)
                         print("Adjusting Audio")
                         self.recognise.adjust_for_ambient_noise(
                             source2, duration=0.2)
@@ -120,16 +127,13 @@ class Main():
                 return text
 
     # Control app output
-    def _out(self, text, silent=False):
+    def _out(self, text, silent=False, write=True):
         print(f"App: {text}")
-        self.gui.gui_out(text)
+        if write:
+            self.gui.gui_out(text)
         if not silent:
-            self.say(text)
-
-    # Control speech output
-    def say(self, text):
-        self.engine.say(text)
-        self.engine.runAndWait()
+            self.engine.say(text)
+            self.engine.runAndWait()
 
     # Safely exit the app
     def app_exit(self):

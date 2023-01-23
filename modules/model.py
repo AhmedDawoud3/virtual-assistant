@@ -14,6 +14,7 @@ from modules.media.music import Music
 from modules.system.brightness import Brightness
 from modules.system.shutdown import Shutdown
 from modules.system.restart import Restart
+from modules.system.convert import Convert
 
 
 class Model:
@@ -85,6 +86,9 @@ class Model:
                 return (False, download.youtube_download)
             elif "music" in text:
                 return (False, download.music_download)
+
+        elif "convert" in text:
+            return (False, Convert.convert)
 
         elif "music" in text:
             if "play" in text:

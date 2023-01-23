@@ -1,6 +1,10 @@
 Utils/ffmpeg.exe
 data/user.json
 
+Converted Files/
+Downloaded Videos/
+Downloaded Music/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

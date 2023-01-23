@@ -51,7 +51,7 @@ class Music():
         while True:
             self.music.play()
             print("Trying start music")
-            sleep(1)
+            sleep(3)
             if self.music.is_playing():
                 print(f"Music started: {self.music.get_title()}")
                 break
