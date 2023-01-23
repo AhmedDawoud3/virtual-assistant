@@ -2,6 +2,9 @@ from modules.model import Model
 import json
 import pyttsx3
 from funcs import *
+from gui import GUI
+import threading
+import keyboard
 
 
 class Main():
@@ -15,8 +18,19 @@ class Main():
     def main(self):
         model = Model()
 
+        # Start initializing GUI
+        self.gui = GUI()
+
+        gui = threading.Thread(target=self.gui.init)
+        gui.daemon = True
+        gui.start()
+
         # Check user data
         model.check_user_data(self. _in, self._out, self.engine, self.v)
+
+        # make sure that GUI has been initialized
+        while not self.gui.is_ready:
+            continue
 
         # Welcome message
         self._out(f"Good {welcome_mesage()} {model.name}")
@@ -24,7 +38,7 @@ class Main():
 
         # Start Main loop
         while True:
-            command = self._in("Enter your command: ")
+            command = self._in("")
             respond = model.process(command)
 
             # A response of one message
@@ -43,17 +57,44 @@ class Main():
             elif respond[0] == 4002:
                 respond[1](self._in, self._out, self.app_exit)
 
+    # def _in(self, text):
+    #     # self.engine.say(text)
+    #     # self.engine.runAndWait()
+    #     # return input(text)
+    #     text = input(text)
+    #     # self.gui.gui_in(text)
+    #     return text
+
+    # Control user Input
     def _in(self, text):
-        # self.engine.say(text)
-        # self.engine.runAndWait()
-        return input(text)
+        # Show a message with the request
+        if text != "":
+            self._out(text)
 
-    def _out(self, text):
+        # wait for Enter key press
+        while True:
+            print("looping")
+            try:
+                if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "":
+                    text = self.gui.gui_get_text()
+                    self.gui.gui_in(text)
+                    self.gui.clear_entry()
+                    return text
+            except:
+                break
+
+    # Control app output
+    def _out(self, text, silent=False):
         print(text)
-        self.engine.say(text)
-        self.engine.runAndWait()
+        self.gui.gui_out(text)
+        if not silent:
+            self.engine.say(text)
+            self.engine.runAndWait()
 
+    # Safely exit the app
     def app_exit(self):
+        # self.gui.gui_destroy()
+        # print("Destroyed from App")
         quit()
 
 
