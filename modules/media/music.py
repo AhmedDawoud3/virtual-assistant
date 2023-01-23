@@ -62,7 +62,7 @@ class Music():
             # if (self.music.get_position() >= 0.99):
             #     print(f"Finishing {self.music.get_position()}")
             # if (round(self.music.get_position(), 3) == 0.999):
-            if self.music.get_length() - self.music.get_time() < 1000 and self.music.get_length() != 0:
+            if self.music.get_length() - self.music.get_time() < 1000 and self.music.get_length() not in [0, -1]:
                 print(
                     f"{self.music.get_length()} : {self.music.get_time()} : {self.music.get_position() * 100}%")
                 self.next()

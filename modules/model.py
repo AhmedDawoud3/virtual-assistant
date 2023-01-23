@@ -8,6 +8,7 @@ from modules.prayer.prayer import Prayer
 from modules.search.open import Open
 from modules.search.wiki import Wiki
 from modules.search.close import Close
+from modules.search.update import Update
 from modules.download.download import Download
 from modules.media.music import Music
 from modules.system.brightness import Brightness
@@ -23,6 +24,7 @@ class Model:
         self.voice = self.data.get_voice()
 
         self.music = Music()
+        self.update = Update()
 
     def process(self, text):
         text = text.lower()
@@ -91,9 +93,12 @@ class Model:
                 text = text.strip()
                 if text == "":
                     # Continue music in queue
-                    if self.music != None and not self.music.is_playing():
+                    if self.music.music != None and not self.music.is_playing():
                         self.music.pause_continue()
                         return (True, "Playing music...")
+
+                    if self.music != None and self.music.is_playing():
+                        return (True, "Music is already playing")
 
                     # Start music with random artist
                     text = get_word("artist")
@@ -158,6 +163,16 @@ class Model:
             if Close.search(text):
                 return (True, f"Closing {text}")
             # return (True, Close.search(text))
+
+        elif "check" in text and "update" in text:
+            if self.update.check():
+                return (True, "There's an available update")
+            else:
+                return (True, "You Are Running The Latest Version")
+
+        elif "help" in text:
+            Open.search("virtual assistant")
+            return (True, "Check our website for help")
 
         elif "shutdown" in text or "shut down" in text:
             shutdown = Shutdown()

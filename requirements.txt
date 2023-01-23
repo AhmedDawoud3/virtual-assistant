@@ -12,3 +12,4 @@ pafy
 youtube_dl
 keyboard
 pillow
+SpeechRecognition

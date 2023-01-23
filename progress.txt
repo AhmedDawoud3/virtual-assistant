@@ -1,42 +1,42 @@
-Welcome Phrase					Done
-Get data from first time users	Done
-Calculator					    Done
-	-- Error handler			Done
-Hello to you too				Done
-Weather					        Done
-Date					    	Done
-Pray					       	Done
-Time				    		Done
-Change user data				Done
-	-- Name						Done
-	-- City						Done
-	-- Voice					Done
+Welcome Phrase						Done
+Get data from first time users		Done
+Calculator					    	Done
+	-- Error handler				Done
+Hello to you too					Done
+Weather					        	Done
+Date					    		Done
+Pray					       		Done
+Time				    			Done
+Change user data					Done
+	-- Name							Done
+	-- City							Done
+	-- Voice						Done
 Note
 	-- Take
 	-- Delete
-Open							Done
-	-- App			    		Done
-	-- Internet search			Done
-Internet search					Done
-	-- Google					Done
-	-- What is					Done
-	-- Who is					Done
-Download						Done
-	-- youtube video			Done
-	-- youtube music			Done
+Open								Done
+	-- App			    			Done
+	-- Internet search				Done
+Internet search						Done
+	-- Google						Done
+	-- What is						Done
+	-- Who is						Done
+Download							Done
+	-- youtube video				Done
+	-- youtube music				Done
 Convert file
-Music							Done
-	-- play						Done
-	-- pause					Done
-	-- next						Done
-Brightness						Done
-	-- increase					Done
-	-- decrease					Done
-	-- minimum					Done
-	-- maximum					Done
-Close App						Done
-Check Update
-Help
-Shutdown						Done
-Restart							Done
+Music								Done
+	-- play							Done
+	-- pause						Done
+	-- next							Done
+Brightness							Done
+	-- increase						Done
+	-- decrease						Done
+	-- minimum						Done
+	-- maximum						Done
+Close App							Done
+Check Update						Done
+Help								Done
+Shutdown							Done
+Restart								Done
 Bye - Quit - Leave - Stop - adios	Done
