@@ -2,6 +2,7 @@ from tkinter import *
 import threading
 from time import sleep
 import keyboard
+import os
 
 
 class GUI:
@@ -11,6 +12,8 @@ class GUI:
     def init(self):
         # Initiate GUI Window
         self.root = Tk(screenName="Virtual Assistant")
+        self.root.title('Virtual Assistant')
+        self.root.iconbitmap("Icon\icon.ico")
         self.root.geometry("400x600")
         self.root.configure(bg="#CEE5D0")
         self.root.resizable(False, False)
@@ -30,20 +33,26 @@ class GUI:
 
     # Show th app output
     def gui_out(self, text):
-        label = Label(self.root, text=text, justify="left",
-                      background="#F3F0D7", padx=5, pady=5, fg="#000")
-        label.bind('<Configure>', lambda e: label.config(
-            wraplength=label.winfo_width()))
-        self.queue.append((0, label))
-        self.gui_render()
+        self.display(text, "left", "#F3F0D7", 0)
 
     # Show the user input
     def gui_in(self, text):
-        label = Label(self.root, text=text, justify="right",
-                      background="#E0C097", padx=5, pady=5, fg="#000")
-        label.bind('<Configure>', lambda e: label.config(
-            wraplength=label.winfo_width()))
-        self.queue.append((1, label))
+        self.display(text, "right", "#E0C097", 1)
+
+    def display(self, text, justify, background, arg3):
+        label = Label(
+            self.root,
+            text=text,
+            justify=justify,
+            background=background,
+            padx=5,
+            pady=5,
+            fg="#000",
+        )
+        label.bind(
+            '<Configure>', lambda e: label.config(wraplength=label.winfo_width())
+        )
+        self.queue.append((arg3, label))
         self.gui_render()
 
     # Get entry text from the user
