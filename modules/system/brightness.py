@@ -10,16 +10,16 @@ class Brightness:
 
     def increase(self):
         sbc.set_brightness(self.old + 25)
-        return "Increasing brightness"
+        return "Increasing brightness..."
 
     def decrease(self):
         sbc.set_brightness(self.old - 25)
-        return "Decreasing brightness"
+        return "Decreasing brightness..."
 
     def maximum(self):
         sbc.set_brightness(100)
-        return "Maximum brightness"
+        return "Maximizing brightness..."
 
     def minimum(self):
         sbc.set_brightness(0)
-        return "Minimum brightness"
+        return "Minimizing brightness..."

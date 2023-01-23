@@ -5,6 +5,7 @@ from funcs import *
 from gui import GUI
 import threading
 import keyboard
+import sys
 
 
 class Main():
@@ -28,9 +29,14 @@ class Main():
         # Start speech recognition module
         self.recognise = sr.Recognizer()
 
-        # make sure that GUI has been initialized
+        # Make sure that GUI has been initialized
         while not self.gui.is_ready:
             continue
+
+        # Bend Up/Down keys to control input field history
+        # Application crushed when I put them in GUI.init() maybe because GUI is not the main thread
+        keyboard.add_hotkey("up", self.gui.entry_up)
+        keyboard.add_hotkey("down", self.gui.entry_down)
 
         # Check user data
         model.check_user_data(self. _in, self._out, self.engine, self.v)
@@ -100,6 +106,7 @@ class Main():
                     # Send command to GUI
                     self.gui.gui_in(text)
                     self.gui.clear_entry()
+                    print(f"User: {text}")
                     return text
 
             if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "" and self.gui.is_focused():
@@ -109,21 +116,22 @@ class Main():
                 # Send command to GUI
                 self.gui.gui_in(text)
                 self.gui.clear_entry()
+                print(f"User: {text}")
                 return text
 
     # Control app output
     def _out(self, text, silent=False):
-        print(text)
+        print(f"App: {text}")
         self.gui.gui_out(text)
         if not silent:
             self.say(text)
 
+    # Control speech output
     def say(self, text):
         self.engine.say(text)
         self.engine.runAndWait()
 
     # Safely exit the app
-
     def app_exit(self):
         # self.gui.gui_destroy()
         # print("Destroyed from App")
@@ -131,5 +139,6 @@ class Main():
 
 
 if __name__ == "__main__":
+    # with open('file.log', 'a') as sys.stdout:
     main = Main()
     main.main()

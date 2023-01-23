@@ -39,7 +39,7 @@ class Download:
 
         # Starrt downloading
         fileName = str(self.stream[int(quality)].filename)
-        _out("Downloading")
+        _out("Downloading...")
         self.stream[int(quality)].download()
         shutil.move(fileName, f"Downloaded Videos/{fileName}")
         _out("Download completed")
@@ -55,7 +55,7 @@ class Download:
 
         # Start Downloading
         fileName = str(self.bestaudio.filename)
-        _out("Downloading")
+        _out("Downloading...")
         self.bestaudio.download()
         shutil.move(fileName, f"Downloaded Music/{fileName}")
         _out("Download completed")
