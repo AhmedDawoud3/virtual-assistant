@@ -25,9 +25,8 @@ class Main():
         gui.daemon = True
         gui.start()
 
-        # make sure that GUI has been initialized
-        while not self.gui.is_ready:
-            continue
+        # Start speech recognition module
+        self.recognise = sr.Recognizer()
 
         # Check user data
         model.check_user_data(self. _in, self._out, self.engine, self.v)
