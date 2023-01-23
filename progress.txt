@@ -39,4 +39,4 @@ Check Update
 Help
 Shutdown						Done
 Restart							Done
-Bye - Quit - Leave - Stop - adios
+Bye - Quit - Leave - Stop - adios	Done
