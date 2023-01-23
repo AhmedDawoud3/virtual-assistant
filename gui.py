@@ -21,6 +21,7 @@ class GUI:
         self.e = Entry(in_frame, background="#eee", width=60,
                        borderwidth=2)
         self.e.pack(side=BOTTOM, anchor="w", padx=10, pady=10)
+        self.e.focus_set()
 
         # To  control messages appearence
         self.queue = []
@@ -53,6 +54,12 @@ class GUI:
     # Clear entry text
     def clear_entry(self):
         self.e.delete(0, END)
+
+    def is_focused(self):
+        print(self.root.focus_get())
+        print(self.e)
+        if self.root.focus_get() == self.e:
+            return True
 
     # Render the messages on the screen when new message is snet
     def gui_render(self):
