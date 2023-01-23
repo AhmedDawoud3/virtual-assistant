@@ -73,7 +73,6 @@ class Main():
 
         # wait for Enter key press
         while True:
-            print("looping")
             try:
                 if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "":
                     text = self.gui.gui_get_text()
