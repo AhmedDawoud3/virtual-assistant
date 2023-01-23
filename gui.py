@@ -72,6 +72,4 @@ class GUI:
 
     # Destroy the window for safe exit
     def gui_destroy(self):
-        print("Destroying")
         self.root.destroy()
-        print("Destroyed from GUI")
