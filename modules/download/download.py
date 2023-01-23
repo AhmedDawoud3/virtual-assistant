@@ -17,15 +17,18 @@ class Download:
         title = _in("Please enter the title of the video: ")
         self.youtube_search(title)
 
+        buffer = ""
         for i in range(len(self.stream)):
-            _out(f"{i}: {self.stream[i]}")
+            buffer += f"{i}: {self.stream[i]} \n"
+        _out(buffer[:-2], True)
 
         # For first time users
         if path.exists('Downloaded Videos') == False:
-            _out("Please Note That:")
-            _out("'audio' is audio only without video")
-            _out("'video' is video without audio")
-            _out("'normal' is both")
+            buffer = "Please Note That: \n"
+            buffer += "'audio' is audio only without video \n"
+            buffer += "'video' is video without audio \n"
+            buffer += "'normal' is both"
+            _out(buffer)
 
         quality = _in("Choose the quality to download: ")
 
