@@ -1,10 +1,11 @@
 from modules.model import Model
-import json
+import speech_recognition as sr
 import pyttsx3
 from funcs import *
 from modules.GUI.gui import GUI
 import threading
 import keyboard
+import sys
 
 
 class Main():
@@ -25,9 +26,17 @@ class Main():
         gui.daemon = True
         gui.start()
 
-        # make sure that GUI has been initialized
+        # Start speech recognition module
+        self.recognise = sr.Recognizer()
+
+        # Make sure that GUI has been initialized
         while not self.gui.is_ready:
             continue
+
+        # Bend Up/Down keys to control input field history
+        # Application crushed when I put them in GUI.init() maybe because GUI is not the main thread
+        keyboard.add_hotkey("up", self.gui.entry_up)
+        keyboard.add_hotkey("down", self.gui.entry_down)
 
         # Check user data
         model.check_user_data(self. _in, self._out, self.engine, self.v)
@@ -73,22 +82,54 @@ class Main():
 
         # wait for Enter key press
         while True:
-            try:
-                if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "":
-                    text = self.gui.gui_get_text()
+            # Wait for speech command
+            if keyboard.is_pressed('alt + v'):
+                with sr.Microphone() as source2:
+                    # Get command from Microphone
+                    try:
+                        self.say(get_word("after_stand_by"))
+                        print("Adjusting Audio")
+                        self.recognise.adjust_for_ambient_noise(
+                            source2, duration=0.2)
+                        print("Listening")
+                        audio2 = self.recognise.listen(source2)
+                        print("Processing The Data ")
+                        text = self.recognise.recognize_google(audio2)
+                    except sr.RequestError as e:
+                        self._out("Could not request results; {0}".format(e))
+                        continue
+
+                    except sr.UnknownValueError:
+                        self._out("unknown error occured")
+                        continue
+
+                    # Send command to GUI
                     self.gui.gui_in(text)
                     self.gui.clear_entry()
+                    print(f"User: {text}")
                     return text
-            except:
-                break
+
+            if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "" and self.gui.is_focused():
+                # Get command from Entry field
+                text = self.gui.gui_get_text()
+
+                # Send command to GUI
+                self.gui.gui_in(text)
+                self.gui.clear_entry()
+                print(f"User: {text}")
+                return text
 
     # Control app output
     def _out(self, text, silent=False):
-        print(text)
+        print(f"App: {text}")
         self.gui.gui_out(text)
         if not silent:
-            self.engine.say(text)
-            self.engine.runAndWait()
+            self.say(text)
+
+    # Control speech output
+    def say(self, text):
+        self.engine.say(text)
+        self.engine.runAndWait()
 
     # Safely exit the app
     def app_exit(self):
@@ -98,5 +139,6 @@ class Main():
 
 
 if __name__ == "__main__":
+    # with open('file.log', 'a') as sys.stdout:
     main = Main()
     main.main()

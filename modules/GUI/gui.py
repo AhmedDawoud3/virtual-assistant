@@ -1,8 +1,4 @@
 from tkinter import *
-import threading
-from time import sleep
-import keyboard
-import os
 
 THEME = {
     'Background': "#091328"
@@ -27,9 +23,14 @@ class GUI:
         self.e = Entry(in_frame, background="#eee", width=60,
                        borderwidth=2)
         self.e.pack(side=BOTTOM, anchor="w", padx=10, pady=10)
+        self.e.focus_set()
+
+        # To control up and down keys
+        self.queue = []
+        self.queue_i = 0
 
         # To  control messages appearence
-        self.queue = []
+        self.messages = []
 
         self.is_ready = True
         self.root.mainloop()
@@ -40,7 +41,9 @@ class GUI:
 
     # Show the user input
     def gui_in(self, text):
-        self.display_message(text, "right", "#E0C097", 1)
+        self.queue.append(text)
+        self.queue_i = len(self.queue)
+        self.display(text, "right", "#E0C097", 1)
 
     def display_message(self, text, justify, background, arg3):
         label = Label(
@@ -53,9 +56,10 @@ class GUI:
             fg="#000",
         )
         label.bind(
-            '<Configure>', lambda e: label.config(wraplength=label.winfo_width())
+            '<Configure>', lambda e: label.config(
+                wraplength=label.winfo_width())
         )
-        self.queue.append((arg3, label))
+        self.messages.append((arg3, label))
         self.gui_render()
 
     # Get entry text from the user
@@ -66,21 +70,41 @@ class GUI:
     def clear_entry(self):
         self.e.delete(0, END)
 
+    # To Chack if Entry field is focused
+    def is_focused(self):
+        if self.root.focus_get() == self.e:
+            return True
+
+    def entry_up(self):
+        if self.queue_i != 0:
+            self.queue_i -= 1
+            self.clear_entry()
+            self.e.insert(0, self.queue[self.queue_i])
+
+    def entry_down(self):
+        if self.queue_i < (len(self.queue) - 1):
+            self.queue_i += 1
+            self.clear_entry()
+            self.e.insert(0, self.queue[self.queue_i])
+        elif self.queue_i == (len(self.queue) - 1):
+            self.queue_i += 1
+            self.clear_entry()
+
     # Render the messages on the screen when new message is snet
     def gui_render(self):
-        i = len(self.queue)
+        i = len(self.messages)
         for x in range(i):
-            self.queue[x][1].forget()
+            self.messages[x][1].forget()
         for x in range(i):
             # App output
-            if self.queue[i-x-1][0] == 0:
-                self.queue[i-x-1][1].pack(side=BOTTOM,
-                                          anchor="w", padx=5, pady=5)
+            if self.messages[i-x-1][0] == 0:
+                self.messages[i-x-1][1].pack(side=BOTTOM,
+                                             anchor="w", padx=5, pady=5)
 
             # User input
             else:
-                self.queue[i-x-1][1].pack(side=BOTTOM,
-                                          anchor="e", padx=5, pady=5)
+                self.messages[i-x-1][1].pack(side=BOTTOM,
+                                             anchor="e", padx=5, pady=5)
 
     # Destroy the window for safe exit
     def gui_destroy(self):

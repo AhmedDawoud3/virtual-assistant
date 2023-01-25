@@ -1,5 +1,27 @@
 from time import gmtime, strftime
+import random
+
+
 hour_now = int(strftime("%H"))
+
+standBy = [
+    "standing by",
+    "waiting for your commands",
+    "waiting for you",
+    "waiting"
+]
+
+runAfterStandBy = [
+    "I'm still here",
+    "Didn't go",
+    "at your service",
+    "alive",
+    "here",
+    "here we go again",
+]
+
+
+artists = ["Jazz", "Rap", "Classic", "Rock"]
 
 
 def welcome_mesage():
@@ -11,3 +33,12 @@ def welcome_mesage():
         return "evening"
     else:
         return "night"
+
+
+def get_word(keyword):
+    if keyword == "stand_by":
+        return random.choice(standBy)
+    elif keyword == "after_stand_by":
+        return random.choice(runAfterStandBy)
+    elif keyword == "artist":
+        return random.choice(artists)

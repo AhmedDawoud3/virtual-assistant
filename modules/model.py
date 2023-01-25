@@ -1,3 +1,4 @@
+from funcs import *
 from time import strftime
 
 from modules.calculate.calculate import Calculate
@@ -12,7 +13,6 @@ from modules.media.music import Music
 from modules.system.brightness import Brightness
 from modules.system.shutdown import Shutdown
 from modules.system.restart import Restart
-import json
 
 
 class Model:
@@ -86,27 +86,52 @@ class Model:
 
         elif "music" in text:
             if "play" in text:
-                text = text.replace("play music ", "")
-                self.music.search_and_play(text)
-                return (True, "Playing music")
+                text = text.replace("music", "")
+                text = text.replace("play", "")
+                text = text.strip()
+                if text == "":
+                    # Continue music in queue
+                    if self.music != None and not self.music.is_playing():
+                        self.music.pause_continue()
+                        return (True, "Playing music...")
 
-            elif "pause" in text or "stop" in text or "continue" in text:
+                    # Start music with random artist
+                    text = get_word("artist")
+                self.music.search_and_play(text)
+                return (True, f"Playing {text} music...")
+
+            elif "pause" in text or "stop" in text:
                 if self.music.music == None:
-                    self.music.search_and_play("baby shark")
+                    return (True, "Music is not playing")
                 else:
-                    self.music.pause_continue()
-                return (True, "Ok")
+                    if self.music.is_playing():
+                        self.music.pause_continue()
+
+                        return (True, "Pausing music..." if "pause" in text else "Stopping music...")
+                    else:
+                        return (True, "Music is not playing")
+
+            elif "continue" in text:
+                if self.music.music == None:
+                    self.music.search_and_play(get_word("artist"))
+                    return (True, "Playing music...")
+                else:
+                    if not self.music.is_playing():
+                        self.music.pause_continue()
+                        return (True, "Continuing music...")
+                    else:
+                        return (True, "Music is already playing")
 
             elif "next" in text:
                 if self.music.music == None:
-                    self.music.search_and_play("baby shark")
+                    self.music.search_and_play(get_word("artist"))
                 else:
                     self.music.next()
                 return (True, "Playing next music...")
 
             elif "prev" in text:
                 if self.music.music == None:
-                    self.music.search_and_play("baby shark")
+                    self.music.search_and_play(get_word("artist"))
                 else:
                     self.music.prev()
                 return (True, "Playing previous music...")
@@ -165,5 +190,6 @@ class Model:
             self.voice = self.data.get_voice()
 
     def model_exit_msg(self, _in, _out, app_exit):
+        self.music.stop()
         _out("It was an honor serving here")
         app_exit()
