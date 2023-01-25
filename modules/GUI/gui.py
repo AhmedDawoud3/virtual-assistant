@@ -1,5 +1,9 @@
 from tkinter import *
 
+THEME = {
+    'Background': "#091328"
+}
+
 
 class GUI:
     def __init__(self):
@@ -11,24 +15,14 @@ class GUI:
         self.root.title('Virtual Assistant')
         self.root.iconbitmap("Icon\icon.ico")
         self.root.geometry("400x600")
-        self.root.configure(bg="#CEE5D0")
-        # self.root.configure(bg="#eee")
+        self.root.configure(bg=THEME['Background'])
         self.root.resizable(False, False)
 
         # Make and place entry field
-        # in_frame = Frame(background="#B6EADA", padx=10, pady=10)
-        # in_frame.pack(side=BOTTOM)
-
-        # self.e = Entry(in_frame, background="#CBEDD5", width=60,
-        #                borderwidth=2)
-
-        in_frame = Frame(background="#CEE5D0", padx=10, pady=10)
+        in_frame = Frame(background="#ddd", padx=10, pady=10)
         in_frame.pack(side=BOTTOM)
-
-        Frame(self.root, background="#ccc", width=600).pack(side=BOTTOM)
-
-        self.e = Entry(in_frame, background="#F3F0D7", width=60,
-                       borderwidth=1)
+        self.e = Entry(in_frame, background="#eee", width=60,
+                       borderwidth=2)
         self.e.pack(side=BOTTOM, anchor="w", padx=10, pady=10)
         self.e.focus_set()
 
@@ -44,17 +38,15 @@ class GUI:
 
     # Show th app output
     def gui_out(self, text):
-        self.display(text, "left", "#F3F0D7", 0)
-        # self.display(text, "left", "#e3e0c7", 0)
+        self.display_message(text, "left", "#F3F0D7", 0)
 
-        # Show the user input
+    # Show the user input
     def gui_in(self, text):
         self.queue.append(text)
         self.queue_i = len(self.queue)
         self.display(text, "right", "#E0C097", 1)
-        # self.display(text, "right", "#f9e4cb", 1)
 
-    def display(self, text, justify, background, arg3):
+    def display_message(self, text, justify, background, arg3):
         label = Label(
             self.root,
             text=text,
