@@ -4,6 +4,9 @@ from time import sleep
 import keyboard
 import os
 
+THEME = {
+    'Background': "#091328"
+}
 
 class GUI:
     def __init__(self):
@@ -15,7 +18,7 @@ class GUI:
         self.root.title('Virtual Assistant')
         self.root.iconbitmap("Icon\icon.ico")
         self.root.geometry("400x600")
-        self.root.configure(bg="#CEE5D0")
+        self.root.configure(bg=THEME['Background'])
         self.root.resizable(False, False)
 
         # Make and place entry field
@@ -33,13 +36,13 @@ class GUI:
 
     # Show th app output
     def gui_out(self, text):
-        self.display(text, "left", "#F3F0D7", 0)
+        self.display_message(text, "left", "#F3F0D7", 0)
 
     # Show the user input
     def gui_in(self, text):
-        self.display(text, "right", "#E0C097", 1)
+        self.display_message(text, "right", "#E0C097", 1)
 
-    def display(self, text, justify, background, arg3):
+    def display_message(self, text, justify, background, arg3):
         label = Label(
             self.root,
             text=text,
