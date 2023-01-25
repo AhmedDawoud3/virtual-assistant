@@ -1,7 +1,10 @@
 from tkinter import *
 
 THEME = {
-    'Background': "#091328"
+    # 'Background': "#091328"
+    "bg": "#CEE5D0",
+    "user": "#E0C097",
+    "app": "#F3F0D7"
 }
 
 
@@ -15,14 +18,19 @@ class GUI:
         self.root.title('Virtual Assistant')
         self.root.iconbitmap("Icon\icon.ico")
         self.root.geometry("400x600")
-        self.root.configure(bg=THEME['Background'])
+        self.root.configure(bg=THEME['bg'])
         self.root.resizable(False, False)
 
         # Make and place entry field
-        in_frame = Frame(background="#ddd", padx=10, pady=10)
+        in_frame = Frame(self.root, background=THEME['bg'], padx=10, pady=10)
         in_frame.pack(side=BOTTOM)
-        self.e = Entry(in_frame, background="#eee", width=60,
+
+        Frame(self.root, background="#333",
+              borderwidth=2, width=400).pack(side=BOTTOM)
+
+        self.e = Entry(in_frame, background=THEME['app'], width=60,
                        borderwidth=2)
+
         self.e.pack(side=BOTTOM, anchor="w", padx=10, pady=10)
         self.e.focus_set()
 
@@ -38,13 +46,13 @@ class GUI:
 
     # Show th app output
     def gui_out(self, text):
-        self.display_message(text, "left", "#F3F0D7", 0)
+        self.display_message(text, "left", THEME["app"], 0)
 
     # Show the user input
     def gui_in(self, text):
         self.queue.append(text)
         self.queue_i = len(self.queue)
-        self.display(text, "right", "#E0C097", 1)
+        self.display_message(text, "right", THEME["user"], 1)
 
     def display_message(self, text, justify, background, arg3):
         label = Label(

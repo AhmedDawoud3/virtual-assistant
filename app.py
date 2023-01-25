@@ -2,7 +2,8 @@ from modules.model import Model
 import speech_recognition as sr
 import pyttsx3
 from funcs import *
-from modules.GUI.gui import GUI
+from GUI.app import GUI
+# from GUI.notes import Notes_Gui
 import threading
 import keyboard
 import sys
@@ -21,6 +22,7 @@ class Main():
 
         # Start initializing GUI
         self.gui = GUI()
+        # notes = Notes_Gui()
 
         gui = threading.Thread(target=self.gui.init)
         gui.daemon = True

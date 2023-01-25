@@ -1,4 +1,4 @@
-from gui import THEME
+from GUI.app import THEME
 import json
 import os
 from tkinter import *
@@ -86,7 +86,6 @@ class Notes_Gui():
     def new_note(self, text=""):
         self.notes.append({'text': text})
         self.new_frame(text)
-        
 
     def new_frame(self, text=""):
         def flip_in_edit(frame):
@@ -125,7 +124,6 @@ class Notes_Gui():
         frame.text.config(height=int(
             frame.text.index('end').split('.')[0]) - 1, state=DISABLED)
         self.update()
-        
 
     def update(self):
         for frame in self.frames:
@@ -149,7 +147,8 @@ class Notes_Gui():
 
     def save_notes(self):
         for i in range(len(self.frames)):
-            self.notes[i]['text'] = str(self.frames[i].text.get("1.0", END)).strip()
+            self.notes[i]['text'] = str(
+                self.frames[i].text.get("1.0", END)).strip()
 
         with open(self.path, "w") as f:
             f.write(self.serialize())
