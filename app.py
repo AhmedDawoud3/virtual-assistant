@@ -2,7 +2,7 @@ from modules.model import Model
 import json
 import pyttsx3
 from funcs import *
-from gui import GUI
+from modules.GUI.gui import GUI
 import threading
 import keyboard
 
