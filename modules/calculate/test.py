@@ -3,7 +3,7 @@ import unittest
 
 
 class Calc_test(unittest.TestCase):
-    def test_no_numbers_test(self):
+    def test_no_numbers(self):
         calc = Calculate()
         self.assertFalse(calc.can_calculate("hello world"))
 

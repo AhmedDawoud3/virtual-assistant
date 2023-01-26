@@ -13,3 +13,5 @@ youtube_dl
 keyboard
 pillow
 SpeechRecognition
+tkinter
+tkfontawesome

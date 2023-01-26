@@ -6,6 +6,9 @@ Converted Files/
 Downloaded Videos/
 Downloaded Music/
 
+notes.json
+*.jpg
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
