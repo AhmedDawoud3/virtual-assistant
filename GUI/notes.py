@@ -6,6 +6,9 @@ from functools import partial
 from tkfontawesome import icon_to_image
 import keyboard
 
+# !!! -- Note -- uncomment save in line 203 -- !!!
+# !!! -- Not Scrollable -- working on it -- !!!
+
 
 class Notes_GUI:
     def __init__(self, notes_obj):
