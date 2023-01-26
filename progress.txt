@@ -11,9 +11,9 @@ Change user data					Done
 	-- Name							Done
 	-- City							Done
 	-- Voice						Done
-Note
-	-- Take
-	-- Delete
+Note								Done
+	-- Take							Done
+	-- Delete						Done
 Open								Done
 	-- App			    			Done
 	-- Internet search				Done
@@ -24,7 +24,7 @@ Internet search						Done
 Download							Done
 	-- youtube video				Done
 	-- youtube music				Done
-Convert file
+Convert file						Done
 Music								Done
 	-- play							Done
 	-- pause						Done

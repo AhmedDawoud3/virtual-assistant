@@ -226,6 +226,12 @@ class Model:
             self.data.change_voice(_in, _out, engine, v)
             self.voice = self.data.get_voice()
 
+    def get_theme(self):
+        return self.data.get_theme()
+
+    def set_theme(self, i):
+        self.data.set_theme(i)
+
     def model_exit_msg(self, _in, _out, app_exit):
         self.music.stop()
         _out("It was an honor serving here")

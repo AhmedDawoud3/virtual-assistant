@@ -22,6 +22,33 @@ runAfterStandBy = [
 ]
 
 
+THEMES = [{
+    # "bg": "#1A120B",
+    # "app": "#3C2A21",
+    # "user": "#D5CEA3",
+    # "text": "#E5E5CB"
+    "bg": "#2A2438",
+    "app": "#352F44",
+    "user": "#5C5470",
+    "text": "#DBD8E3"
+}, {
+    "bg": "#F7ECDE",
+    "app": "#E9DAC1",
+    "user": "#54BAB9",
+    "text": "#000"
+}, {
+    "bg": "#FAF8F1",
+    "app": "#FAEAB1",
+    "user": "#C58940",
+    "text": "#000"
+}, {
+    "app": "#CEE5D0",
+    "bg": "#F3F0D7",
+    "user": "#E0C097",
+    "text": "#000"
+}]
+
+
 artists = ["Jazz", "Rap", "Classic", "Rock"]
 
 

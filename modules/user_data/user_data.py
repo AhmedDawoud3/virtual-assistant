@@ -14,7 +14,8 @@ class UserData:
             self.data = {
                 'username': "",
                 'city': '',
-                'voice': 1
+                'voice': 1,
+                'theme': 0
             }
 
     def update_data_file(self):
@@ -30,6 +31,9 @@ class UserData:
     def get_voice(self):
         return self.data['voice']
 
+    def get_theme(self):
+        return self.data['theme']
+
     def set_name(self, name):
         self.data['username'] = name
         self.update_data_file()
@@ -42,12 +46,16 @@ class UserData:
         self.data['voice'] = voice
         self.update_data_file()
 
+    def set_theme(self, theme):
+        self.data['theme'] = theme
+        self.update_data_file()
+
+    # For External use in model
     def change_name(self, _in, _out):
         _out("What's your name?")
         name = _in("")
         self.set_name(name)
 
-    # For External use in model
     def change_city(self, _in, _out):
         while True:
             _out("Please Enter Your City :")

@@ -3,10 +3,8 @@ import speech_recognition as sr
 import pyttsx3
 from funcs import *
 from GUI.app import GUI
-# from GUI.notes import Notes_Gui
 import threading
 import keyboard
-import sys
 
 
 class Main():
@@ -21,8 +19,7 @@ class Main():
         model = Model()
 
         # Start initializing GUI
-        self.gui = GUI()
-        # notes = Notes_Gui()
+        self.gui = GUI(0, model.get_theme, model.set_theme)
 
         gui = threading.Thread(target=self.gui.init)
         gui.daemon = True
@@ -42,6 +39,9 @@ class Main():
 
         # Check user data
         model.check_user_data(self. _in, self._out, self.engine, self.v)
+
+        # Set User Default Theme
+        self.gui.gui_change_theme(model.get_theme())
 
         # Welcome message
         self._out(f"Good {welcome_mesage()} {model.name}")
