@@ -5,6 +5,7 @@ from modules.calculate.calculate import Calculate
 from modules.user_data.user_data import UserData
 from modules.weather.weather import Weather
 from modules.prayer.prayer import Prayer
+from modules.notes.notes import Notes
 from modules.search.open import Open
 from modules.search.wiki import Wiki
 from modules.search.close import Close
@@ -26,6 +27,7 @@ class Model:
 
         self.music = Music()
         self.update = Update()
+        self.notes = Notes()
 
     def process(self, text):
         text = text.lower()
@@ -57,6 +59,22 @@ class Model:
 
         elif "change" in text and "voice" in text:
             return (4001, self.data.change_voice)
+
+        elif "note" in text:
+            # if "show" in text or "get" in text or "open" in text:
+            #     return (False, self.notes.show_notes)
+
+            if "add" in text or "take" in text or "make" in text:
+                return (False, self.notes.va_add_note)
+
+            elif "edit" in text or "change" in text:
+                return (False, self.notes.va_edit_note)
+
+            elif "delete" in text or "remove" in text:
+                return (False, self.notes.va_delete_note)
+
+            else:
+                return (False, self.notes.va_show_notes)
 
         elif "open" in text:
             text = text.replace("open ", "")

@@ -78,7 +78,7 @@ class Notes_GUI:
 
             # Delete note icon
             delete_btn = Button(note_frame, text="X",
-                                background=THEME["user"], padx=5, borderwidth=1, activebackground=THEME["user"], command=partial(self.delete_note, note))
+                                background=THEME["user"], padx=5, borderwidth=1, activebackground=THEME["user"], command=partial(self.delete_note_alert, note))
             delete_btn.grid(column=2, row=0, rowspan=2, sticky="e", padx=5)
 
             data_frame.bind("<Button-1>", partial(self.edit_note, note))
@@ -89,6 +89,8 @@ class Notes_GUI:
         # Load Notes GUI
         self.main_frame.pack(fill="both", expand=True)
 
+        keyboard.add_hotkey("esc", self.quit)
+
     def add_note(self):
         note = self.notes_obj.add_note()
         self.edit_note(note)
@@ -96,6 +98,7 @@ class Notes_GUI:
     def edit_note(self, note, event=None):
         # Forget main frame
         self.main_frame.forget()
+        keyboard.remove_hotkey("esc")
 
         # Initiate a frame to edit the note
         self.edit_note_frame = Frame(
@@ -157,14 +160,13 @@ class Notes_GUI:
         self.edit_note_frame.forget()
         self.reload()
 
-    # Delete note button
-    def delete_note(self, note):
-        self.main_frame.forget()
-        self.delete_note_alert(note)
-
     # Show Delete note alert
     def delete_note_alert(self, note):
-        # The Main frame
+        # Forget main frame
+        self.main_frame.forget()
+        keyboard.remove_hotkey("esc")
+
+        # Load alert main frame
         self.alert_frame = Frame(self.root, background=THEME["bg"])
         self.alert_frame.pack(fill="both", expand=True)
 
@@ -221,5 +223,12 @@ class Notes_GUI:
         self.note_list = self.notes_obj.note_list
         self.notes_obj.save()
         for frame in self.notes_frames:
-            frame.forget()
+            frame.destroy()
         self.load()
+
+    # Quit from esc key
+    def quit(self):
+        if not self.root.focus_displayof():
+            return
+
+        self.root.destroy()

@@ -84,7 +84,7 @@ class Main():
     #     return text
 
     # Control user Input
-    def _in(self, text):
+    def _in(self, text, can_empty=False):
         # Show a message with the request
         if text != "":
             self._out(text)
@@ -118,15 +118,16 @@ class Main():
                     print(f"User: {text}")
                     return text
 
-            if keyboard.is_pressed('enter') and self.gui.gui_get_text() != "" and self.gui.is_focused():
-                # Get command from Entry field
-                text = self.gui.gui_get_text()
+            if keyboard.is_pressed('enter') and self.gui.is_focused():
+                if can_empty or self.gui.gui_get_text() != "":
+                    # Get command from Entry field
+                    text = self.gui.gui_get_text()
 
-                # Send command to GUI
-                self.gui.gui_in(text)
-                self.gui.clear_entry()
-                print(f"User: {text}")
-                return text
+                    # Send command to GUI
+                    self.gui.gui_in(text)
+                    self.gui.clear_entry()
+                    print(f"User: {text}")
+                    return text
 
     # Control app output
     def _out(self, text, silent=False, write=True):
