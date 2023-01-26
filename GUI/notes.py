@@ -4,6 +4,7 @@ import tkinter.font as font
 import time
 from functools import partial
 from tkfontawesome import icon_to_image
+from GUI.scrollableframe import ScrollableFrame
 import keyboard
 
 # !!! -- Note -- uncomment save in line 203 -- !!!
@@ -19,18 +20,25 @@ class Notes_GUI:
         self.root.configure(bg=THEME["bg"])
         self.root.resizable(False, False)
 
+        # Main frame that contains notes and Add notes button
         self.main_frame = Frame(self.root, background=THEME["bg"])
+        self.main_frame.pack(fill="both", expand=True)
 
-        # Fontawesome icons
+        # Scrollable bar that contains notes
+        self.main_data = ScrollableFrame(
+            self.main_frame, background=THEME["bg"])
+        self.main_data.pack(fill="both", expand=True)
+
+        # # Fontawesome icons
         self.save_icon = icon_to_image("check", fill="#000", scale_to_width=20)
         self.plus_icon = icon_to_image(
             "plus-circle", fill=THEME["app"], scale_to_width=30)
 
         # Add note button
         self.add = Button(self.main_frame, image=self.plus_icon,
-                          background=THEME["user"], padx=10, pady=10, command=self.add_note, activebackground=THEME["user"])
-        self.add.pack(side=BOTTOM, anchor="e", padx=20,
-                      pady=20, ipadx=5, ipady=5)
+                          background=THEME["user"], command=self.add_note, activebackground=THEME["user"], width=40, height=40)
+
+        self.add.place(in_=self.main_frame, relx=0.9, rely=0.93, anchor=CENTER)
 
         # Load Saved notes
         self.notes_obj = notes_obj
@@ -45,7 +53,7 @@ class Notes_GUI:
         for note in self.note_list:
             # Set A frame for the note
             note_frame = Frame(
-                self.main_frame, background=THEME["app"], padx=5, pady=5, highlightthickness=2, highlightbackground=THEME["user"])
+                self.main_data.scrollable_frame, background=THEME["app"], padx=5, pady=5, highlightthickness=2, highlightbackground=THEME["user"])
             note_frame.pack(padx=10, pady=10, fill='both')
             self.notes_frames.append(note_frame)
 
@@ -117,7 +125,7 @@ class Notes_GUI:
 
         # Save note button
         save = Button(self.edit_note_frame, image=self.save_icon,
-                      background=THEME["user"], command=lambda: self.save_note(note), activebackground=THEME["bg"])
+                      background=THEME["user"], command=lambda: self.save_note(note), activebackground=THEME["user"])
         save.pack(side=BOTTOM, anchor="e", padx=10,
                   pady=10, ipadx=5, ipady=50)
 
@@ -188,10 +196,28 @@ class Notes_GUI:
                             pady=5, command=lambda: self.delete_note_alert_reponse(False, note))
         refuse_btn.pack(side=RIGHT, padx=20)
 
+        # Enter for "Yes", Esc for "No"
+        keyboard.add_hotkey(
+            "enter", self.delete_note_alert_reponse, (True, note, ))
+
+        keyboard.add_hotkey(
+            "esc", self.delete_note_alert_reponse, (False, note, ))
+
     # User responded to Delete note alert
     def delete_note_alert_reponse(self, reponse, note):
+        # To Make sure that window is focused to avoid unexpected results due to keyboard "esc" hotkey
+        if not self.root.focus_displayof():
+            return
+
+        # To avoid "note" argument confliction
+        keyboard.remove_hotkey("enter")
+        keyboard.remove_hotkey("esc")
+
+        # If Delete Confirmed
         if reponse:
             self.notes_obj.delete_note(note)
+
+        # Back to Main frame
         self.alert_frame.forget()
         self.reload()
 
