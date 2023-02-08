@@ -1,39 +1,54 @@
 numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
-def replace_text_by_num(text):
-    text = text.replace("one", "1")
-    text = text.replace("two", "2")
-    text = text.replace("three", "3")
-    text = text.replace("four", "4")
-    text = text.replace("five", "5")
-    text = text.replace("six", "6")
-    text = text.replace("seven", "7")
-    text = text.replace("eight", "8")
-    text = text.replace("nine", "9")
+def replace_text_by_num(text: str) -> str:
+    """Replace words with their equivalent numbers."""
+    number_map: dict[str, str] = {
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+    }
+    for k, v in number_map.items():
+        text = text.replace(k, v)
     return text
 
 
-def replace_expressions(text):
-    text = text.replace("plus", "+")
-    text = text.replace("minus", "-")
-    text = text.replace("over", "/")
-    text = text.replace("divided by", "/")
-    text = text.replace("divide by", "/")
-    text = text.replace("by", "*")
-    text = text.replace("divided", "/")
-    text = text.replace("divide", "/")
+def replace_expressions(text: str) -> str:
+    """Replace words with their mathematical equivalents."""
+
+    # Define the text to replace in the text.
+    replace_text: dict[str, str] = {
+        "plus": "+",
+        "minus": "-",
+        "over": "/",
+        "divided by": "/",
+        "divide by": "/",
+        "by": "*",
+        "divided": "/",
+        "divide": "/",
+    }
+
+    # Replace the text.
+    for word, replacement in replace_text.items():
+        text = text.replace(word, replacement)
+
+    # Close the square root.
     if "square root" in text:
         text = text.replace("square root ", "sqrt(") + ")"
 
     return text
 
 
-def is_math_expression(text):
-    calc = False
+# this code is trying to determine if the string is a math expression or not. 
+def is_math_expression(text: str) -> bool:
+    """Determine if the string is a math expression or not."""
+    calc: bool = False
     for i in text:
-        calc = True if i in numbers else False
-    if calc == False:
-        return False
-    else:
-        return True
+        calc = i in numbers
+    return calc != False

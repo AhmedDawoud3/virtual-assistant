@@ -51,9 +51,13 @@ class UserData:
         self.update_data_file()
 
     # For External use in model
+    # This function is called when a user types a message in the chat
     def change_name(self, _in, _out):
+        # Ask the user for their name
         _out("What's your name?")
+        # Get the user input
         name = _in("")
+        # Set the name in the user's session
         self.set_name(name)
 
     def change_city(self, _in, _out):
@@ -72,7 +76,7 @@ class UserData:
             _out(f"For this voice press {a}")
         c = _in("Please Choose (0, 1) :")
 
-        while (c != "0" and c != "1"):
+        while c not in ["0", "1"]:
             c = _in("Please Choose (0, 1) :")
 
         c = int(c)

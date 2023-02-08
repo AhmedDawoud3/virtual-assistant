@@ -81,16 +81,7 @@ class Model:
             return (True, Open.search(text))
 
         elif "what is" in text or "what's" in text or "who is" in text or "who's" in text:
-            text = text.replace("what is ", "")
-            text = text.replace("what's ", "")
-            text = text.replace("who is ", "")
-            text = text.replace("who's ", "")
-
-            wiki = Wiki()
-            if wiki.wiki_search(text):
-                return (True, wiki.get_result())
-            else:
-                return (True, "This is some results from the web")
+            return self.handle_wh_questoin(text)
 
         elif "google" in text:
             text = text.replace("google ", "")
@@ -110,9 +101,7 @@ class Model:
 
         elif "music" in text:
             if "play" in text:
-                text = text.replace("music", "")
-                text = text.replace("play", "")
-                text = text.strip()
+                text = text.replace("music", "").replace("play", "").strip()
                 if text == "":
                     # Continue music in queue
                     if self.music.music != None and not self.music.is_playing():
@@ -128,36 +117,32 @@ class Model:
                 return (True, f"Playing {text} music...")
 
             elif "pause" in text or "stop" in text:
-                if self.music.music == None:
+                if self.music.music is None or not self.music.is_playing():
                     return (True, "Music is not playing")
-                else:
-                    if self.music.is_playing():
-                        self.music.pause_continue()
+                self.music.pause_continue()
 
-                        return (True, "Pausing music..." if "pause" in text else "Stopping music...")
-                    else:
-                        return (True, "Music is not playing")
-
+                return (True, "Pausing music..." if "pause" in text else "Stopping music...")
+            
             elif "continue" in text:
-                if self.music.music == None:
+                if self.music.music is None:
                     self.music.search_and_play(get_word("artist"))
                     return (True, "Playing music...")
                 else:
-                    if not self.music.is_playing():
-                        self.music.pause_continue()
-                        return (True, "Continuing music...")
-                    else:
+                    if self.music.is_playing():
                         return (True, "Music is already playing")
 
+                    self.music.pause_continue()
+                    return (True, "Continuing music...")
+
             elif "next" in text:
-                if self.music.music == None:
+                if self.music.music is None:
                     self.music.search_and_play(get_word("artist"))
                 else:
                     self.music.next()
                 return (True, "Playing next music...")
 
             elif "prev" in text:
-                if self.music.music == None:
+                if self.music.music is None:
                     self.music.search_and_play(get_word("artist"))
                 else:
                     self.music.prev()
@@ -208,6 +193,19 @@ class Model:
             return (4002, self.model_exit_msg)
 
         return (True, "Sorry I didn't understand")
+
+    def handle_wh_questoin(self, text):
+        text = text.replace("what is ", "")
+        text = text.replace("what's ", "")
+        text = text.replace("who is ", "")
+        text = text.replace("who's ", "")
+
+        wiki = Wiki()
+        return (
+            (True, wiki.get_result())
+            if wiki.wiki_search(text)
+            else (True, "This is some results from the web")
+        )
 
     def check_user_data(self, _in, _out, engine, v):
         # Check the username

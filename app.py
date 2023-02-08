@@ -9,8 +9,10 @@ import keyboard
 
 class Main():
     def __init__(self):
-        self.v = ["HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0",
-                  "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"]
+        self.v = [
+            r"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0",
+            r"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
+        ]
 
         self.engine = pyttsx3.init()
         self.engine.setProperty('voice', self.v[0])
@@ -118,16 +120,15 @@ class Main():
                     print(f"User: {text}")
                     return text
 
-            if keyboard.is_pressed('enter') and self.gui.is_focused():
-                if can_empty or self.gui.gui_get_text() != "":
-                    # Get command from Entry field
-                    text = self.gui.gui_get_text()
+            if keyboard.is_pressed('enter') and self.gui.is_focused() and (can_empty or self.gui.gui_get_text() != ""):   
+                # Get command from Entry field
+                text = self.gui.gui_get_text()
 
-                    # Send command to GUI
-                    self.gui.gui_in(text)
-                    self.gui.clear_entry()
-                    print(f"User: {text}")
-                    return text
+                # Send command to GUI
+                self.gui.gui_in(text)
+                self.gui.clear_entry()
+                print(f"User: {text}")
+                return text
 
     # Control app output
     def _out(self, text, silent=False, write=True):

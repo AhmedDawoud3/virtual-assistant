@@ -4,7 +4,8 @@ f = wmi.WMI()
 
 
 class Close:
-    def search(text):
+    @classmethod
+    def search(cls, text: str) -> bool:
         for process in f.Win32_Process():
             if text in str(process.Name):
                 subprocess.call(

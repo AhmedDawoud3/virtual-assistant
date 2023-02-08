@@ -13,8 +13,7 @@ def Weather(city):
     except GeocoderUnavailable:
         return "Sorry, Couldn't get weather. Please, check your Internet connection"
 
-    api_url = "https://fcc-weather-api.glitch.me/api/current?lat=" + \
-        str(lon) + "&lon=" + str(lat)
+    api_url = f"https://fcc-weather-api.glitch.me/api/current?lat={lon}&lon={lat}"
     data = requests.get(api_url)
     data_json = data.json()
 

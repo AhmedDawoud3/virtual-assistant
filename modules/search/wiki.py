@@ -18,6 +18,7 @@ class Wiki:
     def get_result(self):
         return f"According to wikipedia: {self.result}"
 
-    def google_search(text):
+    @classmethod
+    def google_search(cls, text):
         wb.open_new_tab(f'https://www.google.com/search?q={text}')
         return True

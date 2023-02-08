@@ -9,7 +9,9 @@ class Notes:
         if os.path.exists(self.path):
             with open(self.path, "r") as file:
                 data = json.loads(file.read())
-
+        else:
+            data = []
+            
         self.note_list = []
         for note in data:
             self.note_list.append(Note(note))

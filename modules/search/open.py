@@ -6,7 +6,8 @@ from getpass import getuser
 
 
 class Open:
-    def search(text):
+    @classmethod
+    def search(cls, text):
         if "internet" in text or "browser" in text:
             wb.open_new_tab('http://www.google.com')
             return "Opening..."
@@ -20,7 +21,8 @@ class Open:
             wb.open_new_tab(f'https://www.google.com/search?q={text}')
             return "There is some results from the web"
 
-    def search_apps(text):
+    @classmethod
+    def search_apps(cls, text):
         with open(os.path.join("data", "apps.json"), "r") as f:
             data = json.loads(f.read())
             for app in data:
@@ -32,7 +34,8 @@ class Open:
                     return True
         return False
 
-    def search_websites(text):
+    @classmethod
+    def search_websites(cls, text):
         with open(os.path.join("data", "websites.json"), "r") as f:
             data = json.loads(f.read())
             for site in data:

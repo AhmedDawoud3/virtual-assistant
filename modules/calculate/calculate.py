@@ -14,8 +14,7 @@ class Calculate:
         try:
             result = eval(text)
             if float(result).is_integer():
-                self.result = "The answer is {}".format(int(result))
-                return True
+                self.result = f"The answer is {int(result)}"
             else:
                 self.result = "The answer is {:.3f}".format(result)
                 return True
@@ -23,9 +22,7 @@ class Calculate:
         except ZeroDivisionError:
             self.result = "): Can't divide by zero"
             return True
-        except SyntaxError:
-            return False
-        except NameError:
+        except (SyntaxError, NameError):
             return False
         except Exception as e:
             print(e)

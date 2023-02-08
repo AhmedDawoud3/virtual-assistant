@@ -4,7 +4,8 @@ from funcs import *
 
 
 class Convert:
-    def convert(_in, _out):
+    @classmethod
+    def convert(cls, _in, _out):
         if check_ffmpeg():
             _out('Please write down the "path" of the -original- file')
             _out(

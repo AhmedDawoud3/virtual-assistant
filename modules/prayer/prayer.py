@@ -30,14 +30,14 @@ def Prayer(city):
             difference = str(t2 - t1)
 
             if "-" not in difference:
-                if difference[1] == ":":
-                    if difference[0] == "0":
-                        return f"{int(str(difference)[2:4])} minutes left for Al {str(pray)}"
-                    else:
-                        return f"{int(str(difference)[0])} hours {int(str(difference)[2:4])} minutes left for Al {str(pray)}"
-                else:
-                    return f"{int(str(difference)[0:2])} hours {int(str(difference)[3:5])} minutes left for Al {str(pray)}"
+                if difference[1] != ":":
+                    return f"{int(difference[:2])} hours {int(difference[3:5])} minutes left for Al {str(pray)}"
 
+                if difference[0] == "0":
+                    return f"{int(difference[2:4])} minutes left for Al {str(pray)}"
+                else:
+                    return f"{int(difference[0])} hours {int(difference[2:4])} minutes left for Al {str(pray)}"
+                
     t1 = datetime.strptime(timestamp2, "%H:%M")
     t2 = datetime.strptime(prayer["Fajr"], "%H:%M")
 
